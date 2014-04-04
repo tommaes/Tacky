@@ -1,0 +1,52 @@
+<FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_main">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/create_tacky"
+            android:id="@+id/create_tacky"
+            android:onClick="createTacky"
+            android:background="@android:color/transparent"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="50dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/load_tacky"
+            android:id="@+id/loadTacky"
+            android:onClick="loadTacky"
+            android:background="@android:color/transparent"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="50dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/delete_tacky"
+            android:id="@+id/deleteTacky"
+            android:onClick="deleteTacky"
+            android:background="@android:color/transparent"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="50dp" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_tacky">Create Tacky</string>
+    <string name="load_tacky">Load Tacky</string>
+    <string name="delete_tacky">Delete Tacky</string>
+    <string name="characteristics">Characteristics</string>
+    <string name="feed">Feed</string>
+    <string name="change_room">Change Room</string>
+    <string name="new_name_room">New Name Room</string>
+    <string name="change">Change</string>
+    <string name="change_background_room">Change Background Room</string>
+    <string name="change_name_room">Change Name Room</string>
+</resources>
