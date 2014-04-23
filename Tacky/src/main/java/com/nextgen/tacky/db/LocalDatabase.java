@@ -14,7 +14,8 @@ import com.nextgen.tacky.activities.rooms.Outdoors;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.State;
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.display.TackyBody;
 import com.nextgen.tacky.display.TackyDisplayObject;
 import com.nextgen.tacky.display.TackyExpression;
@@ -229,12 +230,13 @@ public class LocalDatabase extends SQLiteOpenHelper {
             State happiness = new State(happinessLevel, happinessGain);
             State energy = new State(energyLevel, energyGain);
             State satisfied = new State(satisfiedLevel, satisfiedGain);
+            TackyState tackyState = new TackyState(happiness, energy, satisfied);
             Room r = getRoom(cur.getString(cur.getColumnIndex(TACKY_CURRENTROOM)), name);
             int headId = cur.getInt(cur.getColumnIndex(TACKY_HEAD));
             int bodyId = cur.getInt(cur.getColumnIndex(TACKY_BODY));
             int expressionId = cur.getInt(cur.getColumnIndex(TACKY_EXPRESSION));
 
-            result = new Tacky(name, birthday, happiness, energy, satisfied, r, headId, bodyId, expressionId);
+            result = new Tacky(name, birthday, tackyState, r, headId, bodyId, expressionId);
         }
 
         cur.close();

@@ -3,10 +3,10 @@ package com.nextgen.tacky.basic;
 /**
  * Created by maes on 30/10/13.
  */
-public class MainItem {
+public abstract class MainItem {
 
-    private String name;
-    private String visualization;
+    protected String name;
+    protected String visualization;
 
     public MainItem(String name, String visualization) {
         this.name = name;
@@ -19,9 +19,5 @@ public class MainItem {
 
     public String getVisualization() {
         return visualization;
-    }
-
-    protected void setVisualization(String visualization) {
-        this.visualization = visualization;
     }
 }

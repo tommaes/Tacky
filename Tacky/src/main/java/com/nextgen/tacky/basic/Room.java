@@ -34,7 +34,7 @@ public class Room extends MainItem implements Parcelable {
     }
 
     public void setVisualization(String visualization){
-        super.setVisualization(visualization);
+        this.visualization = visualization;
     }
 
     public RoomType getRoomType() {
@@ -61,9 +61,9 @@ public class Room extends MainItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(super.getName());
-        dest.writeString(super.getVisualization());
-        dest.writeSerializable(this.roomType);
+        dest.writeString(name);
+        dest.writeString(visualization);
+        dest.writeSerializable(roomType);
     }
 
 }

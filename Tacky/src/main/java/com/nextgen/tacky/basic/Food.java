@@ -26,6 +26,7 @@ public class Food extends MainItem implements Parcelable {
     public int getEnergyValue(){
         return energyValue;
     }
+
     public int getTotalUses() {
         return totalUses;
     }
@@ -57,9 +58,9 @@ public class Food extends MainItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getName());
-        dest.writeString(getVisualization());
-        dest.writeInt(getEnergyValue());
-        dest.writeInt(getTotalUses());
+        dest.writeString(name);
+        dest.writeString(visualization);
+        dest.writeInt(energyValue);
+        dest.writeInt(totalUses);
     }
 }

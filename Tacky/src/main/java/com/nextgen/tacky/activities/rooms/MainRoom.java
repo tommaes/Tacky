@@ -2,26 +2,17 @@ package com.nextgen.tacky.activities.rooms;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,21 +22,17 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.nextgen.tacky.R;
-import com.nextgen.tacky.activities.MainActivity;
 import com.nextgen.tacky.activities.MainTackySurface;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.threads.TackyThread;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**

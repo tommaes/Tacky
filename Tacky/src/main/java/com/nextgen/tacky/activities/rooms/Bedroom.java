@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basic.tacky.TackyState;
 
 /**
  * Created by maes on 13/11/13.
@@ -34,11 +35,11 @@ public class Bedroom extends Chamber {
     public boolean onOptionsItemSelected(MenuItem menuItem){
         switch (menuItem.getItemId()) {
             case MENU_SLEEP : {
-                tacky.setCurrentStatus(Tacky.TackyStatus.SLEEPING);
+                tacky.setCurrentStatus(TackyState.TackyStatus.SLEEPING);
                 break;
             }
             case MENU_WAKE_UP : {
-                tacky.setCurrentStatus(Tacky.TackyStatus.TRYTOSLEEP);
+                tacky.setCurrentStatus(TackyState.TackyStatus.TRYTOSLEEP);
                 break;
             }
             default:{

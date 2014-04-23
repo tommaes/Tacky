@@ -1,7 +1,12 @@
 package com.nextgen.tacky.display;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basic.tacky.TackyState;
+import com.nextgen.tacky.db.LocalDatabase;
 
 /**
  * Created by maes on 7/11/13.
@@ -24,14 +29,56 @@ public class TackyDisplayObject implements Parcelable {
         this.expression = p.readParcelable(TackyExpression.class.getClassLoader());
     }
 
-    public TackyHead getHead() {
-        return head;
+    public Bitmap getHeadFront(LocalDatabase db) {
+        return head.getFront(db);
     }
-    public TackyBody getBody() {
-        return body;
+
+    public Bitmap getHeadSleep(LocalDatabase db) {
+        return head.getSleep(db);
     }
-    public TackyExpression getExpression() {
-        return expression;
+
+    public Bitmap getHeadDown(LocalDatabase db) {
+        return head.getDown(db);
+    }
+
+    public Bitmap getHeadSide(LocalDatabase db) {
+        return head.getSide(db);
+    }
+
+    public Bitmap getHeadUp(LocalDatabase db) {
+        return head.getUp(db);
+    }
+
+    public Bitmap getBodyFront(LocalDatabase db) {
+        return body.getFront(db);
+    }
+
+    public Bitmap getBodySleep(LocalDatabase db) {
+        return body.getSleep(db);
+    }
+
+    public Bitmap getBodyUp(LocalDatabase db) {
+        return body.getUp(db);
+    }
+
+    public Bitmap getBodyDown(LocalDatabase db) {
+        return body.getDown(db);
+    }
+
+    public Bitmap getBodySide(LocalDatabase db) {
+        return body.getSide(db);
+    }
+
+    public Bitmap getExpressionFront(LocalDatabase db, TackyState.TackyStatus tackyStatus, TackyState.TackyHappiness tackyHappiness) {
+        return expression.getFront(db, tackyStatus, tackyHappiness);
+    }
+
+    public Bitmap getExpressionSide(LocalDatabase db, TackyState.TackyStatus tackyStatus, TackyState.TackyHappiness tackyHappiness) {
+        return expression.getSide(db, tackyStatus, tackyHappiness);
+    }
+
+    public Bitmap getExpressionSleep(LocalDatabase db) {
+        return expression.getSleep(db);
     }
 
     // implements Parcelable

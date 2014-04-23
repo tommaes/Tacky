@@ -11,7 +11,8 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.db.TackyLocation;
 
 /**
@@ -59,13 +60,13 @@ public class Outdoors extends MainRoom {
         switch(tackyLocation.getOutdoorsType()){
             case PARK:{
                 intent = new Intent(context, Park.class);
-                tacky.setCurrentStatus(Tacky.TackyStatus.NORMAL);
+                tacky.setCurrentStatus(TackyState.TackyStatus.NORMAL);
                 intent.putExtra(Tacky.TACKY, tacky);
                 break;
             }
             case RESTAURANT: {
                 intent = new Intent(context, Restaurant.class);
-                tacky.setCurrentStatus(Tacky.TackyStatus.NORMAL);
+                tacky.setCurrentStatus(TackyState.TackyStatus.NORMAL);
                 intent.putExtra(Tacky.TACKY, tacky);
                 break;
             }
@@ -105,7 +106,7 @@ public class Outdoors extends MainRoom {
             dialogOpen = true;
             CURRENT_LOCATION = tloc;
             final AlertDialog.Builder builder = new AlertDialog.Builder(Outdoors.this);
-            builder.setMessage("Would you like to switch to " + tloc.getRoom().getName() + "?");
+            builder.setMessage("Would you like to switch to " + tloc.getRoomName() + "?");
             builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -118,7 +119,7 @@ public class Outdoors extends MainRoom {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     dialogOpen = false;
-                    tacky.setCurrentRoom(tloc.getRoom());
+                    tloc.transferTackyTo(tacky);
                     Intent intent = startOutdoorsActivity(Outdoors.this, tloc);
                     startActivity(intent);
                     finish();

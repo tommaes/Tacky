@@ -7,7 +7,7 @@ import android.view.SurfaceView;
 
 import com.nextgen.tacky.activities.rooms.MainRoom;
 import com.nextgen.tacky.basic.Room;
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basicDisplay.RoomDisplay;
 import com.nextgen.tacky.basicDisplay.TackyDisplay;
 

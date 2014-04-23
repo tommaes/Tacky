@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.rooms.RoomSwitch;
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.db.LocalDatabase;
 
 /**

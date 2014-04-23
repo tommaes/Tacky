@@ -1,13 +1,15 @@
-package com.nextgen.tacky.basic;
+package com.nextgen.tacky.basic.tacky;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.format.Time;
+
+import com.nextgen.tacky.basic.Food;
+import com.nextgen.tacky.basic.State;
 
 /**
- * Created by maes on 23/10/13.
+ * Created by maes on 19/04/14.
  */
-public class Tacky implements Parcelable {
+public class TackyState implements Parcelable {
 
     public enum TackyStatus{
         NORMAL,
@@ -21,97 +23,50 @@ public class Tacky implements Parcelable {
         SAD
     }
 
-    private String name;
-    private Time dayOfBirth;
     private double happiness;
     private State happinessState;
     private State energy;
     private State satisfied;
-    private Room currentRoom;
+
     private TackyStatus currentStatus = TackyStatus.NORMAL;
     private TackyHappiness tackyHappiness;
 
     private final double startValue = 75;
-    private final double sleepValue = 0.0015;
-    private final double awakeValue = -0.0015;
+    private final float sleepValue = 0.0015f;
+    private final float awakeValue = -0.0015f;
 
-    private int headId;
-    private int bodyId;
-    private int expressionId;
-
-
-    public Tacky(String n, Room room, int h, int b, int e) {
-        this.name = n;
-        this.dayOfBirth = new Time();
-        this.dayOfBirth.setToNow();
+    public TackyState() {
         this.happinessState = new State(0, awakeValue / 5);
         this.energy = new State(startValue, awakeValue);
         this.satisfied = new State(startValue, awakeValue);
-        this.currentRoom = room;
-
-        headId = h;
-        bodyId = b;
-        expressionId = e;
-
         calculateHappiness();
     }
 
-    public Tacky(String n, long birthday,
-                 State happiness, State energy, State satisfied,
-                 Room r, int h, int b, int e
-    ) {
-        this.name = n;
-        Time time = new Time();
-        time.set(birthday);
-        this.dayOfBirth = time;
-        this.happinessState = happiness;
+    public TackyState(State happinessState, State energy, State satisfied) {
+        this.happinessState = happinessState;
         this.energy = energy;
         this.satisfied = satisfied;
-        this.currentRoom = r;
-
-        headId = h;
-        bodyId = b;
-        expressionId = e;
-
         calculateHappiness();
     }
 
-    Tacky(Parcel p) {
-        this.name = p.readString();
+    public TackyState(Parcel p){
 
-        Long time = p.readLong();
-        this.dayOfBirth =  new Time();
-        this.dayOfBirth.set(time);
         this.happinessState = p.readParcelable(State.class.getClassLoader());
         this.energy = p.readParcelable(State.class.getClassLoader());
         this.satisfied = p.readParcelable(State.class.getClassLoader());
-        this.currentRoom = p.readParcelable(Room.class.getClassLoader());
         this.currentStatus = TackyStatus.valueOf(p.readString());
-
-        headId = p.readInt();
-        bodyId = p.readInt();
-        expressionId = p.readInt();
-
         calculateHappiness();
     }
 
-    public final static String TACKY = "com.nextgen.tacky.basic.Tacky";
-
-    public static final Tacky.Creator<Tacky> CREATOR = new Tacky.Creator<Tacky>(){
-
-        @Override
-        public Tacky createFromParcel(Parcel source) {
-            return new Tacky(source);
-        }
-
-        @Override
-        public Tacky[] newArray(int size) {
-            return new Tacky[size];
-        }
-    };
-
-    public String getName() {
-        return name;
+    public synchronized void calculateHappiness(){
+        double minimum = Math.min(energy.getStateLevel(), satisfied.getStateLevel());
+        if (minimum > 50)
+            happiness = (energy.getStateLevel() + satisfied.getStateLevel()) / 2;
+        else happiness = minimum;
+        happiness += happinessState.getStateLevel();
+        happiness = Math.min(happiness, 100);
+        happinessState.calculateState();
+        setTackyHappiness();
     }
 
     public synchronized void calculateEnergy(){
@@ -130,16 +85,7 @@ public class Tacky implements Parcelable {
         return energy.getMaxLevel();
     }
 
-    public synchronized void calculateHappiness(){
-        double minimum = Math.min(energy.getStateLevel(), satisfied.getStateLevel());
-        if (minimum > 50)
-            happiness = (energy.getStateLevel() + satisfied.getStateLevel()) / 2;
-        else happiness = minimum;
-        happiness += happinessState.getStateLevel();
-        happiness = Math.min(happiness, 100);
-        happinessState.calculateState();
-        setTackyHappiness();
-    }
+
 
     public synchronized double getHappinessLevel() {
         return happiness;
@@ -213,29 +159,6 @@ public class Tacky implements Parcelable {
         }
     }
 
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-    public Time getDayOfBirth() {
-        return dayOfBirth;
-    }
-
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
-    }
-
-    public int getHeadId() {
-        return headId;
-    }
-
-    public int getExpressionId() {
-        return expressionId;
-    }
-
-    public int getBodyId() {
-        return bodyId;
-    }
-
     public boolean isAlive(){
         return (energy.getStateLevel() > 0) && (satisfied.getStateLevel() > 0);
     }
@@ -245,6 +168,19 @@ public class Tacky implements Parcelable {
         this.energy.addState(-0.00001);
     }
 
+    public static final TackyState.Creator<TackyState> CREATOR = new TackyState.Creator<TackyState>(){
+
+        @Override
+        public TackyState createFromParcel(Parcel source) {
+            return new TackyState(source);
+        }
+
+        @Override
+        public TackyState[] newArray(int size) {
+            return new TackyState[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -252,15 +188,9 @@ public class Tacky implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeLong(this.dayOfBirth.toMillis(false));
         dest.writeParcelable(this.happinessState, flags);
         dest.writeParcelable(this.energy, flags);
         dest.writeParcelable(this.satisfied, flags);
-        dest.writeParcelable(this.currentRoom, flags);
         dest.writeString(this.currentStatus.toString());
-        dest.writeInt(this.headId);
-        dest.writeInt(this.bodyId);
-        dest.writeInt(this.expressionId);
     }
 }

@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.nextgen.tacky.basic.Tacky;
+import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.db.LocalDatabase;
 
 /**
@@ -43,7 +44,7 @@ public class TackyExpression implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(LocalDatabase db, Tacky.TackyStatus tackyStatus, Tacky.TackyHappiness tackyHappiness){
+    public Bitmap getFront(LocalDatabase db, TackyState.TackyStatus tackyStatus, TackyState.TackyHappiness tackyHappiness){
         Bitmap displayItem = null;
         switch (tackyStatus) {
             case SLEEPING: {
@@ -70,7 +71,7 @@ public class TackyExpression implements Parcelable {
         return displayItem;
     }
 
-    public Bitmap getSide(LocalDatabase db, Tacky.TackyStatus tackyStatus, Tacky.TackyHappiness tackyHappiness){
+    public Bitmap getSide(LocalDatabase db, TackyState.TackyStatus tackyStatus, TackyState.TackyHappiness tackyHappiness){
         Bitmap displayItem = null;
         switch (tackyStatus) {
             case SLEEPING: {

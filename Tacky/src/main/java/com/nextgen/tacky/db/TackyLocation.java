@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.nextgen.tacky.activities.rooms.Outdoors;
 import com.nextgen.tacky.basic.Room;
+import com.nextgen.tacky.basic.tacky.Tacky;
 
 /**
  * Created by Bram on 3/12/13.
@@ -31,8 +32,12 @@ public class TackyLocation {
         location.setLongitude(longitude);
     }
 
-    public Room getRoom() {
-        return room;
+    public void transferTackyTo(Tacky tacky){
+        tacky.setCurrentRoom(room);
+    }
+
+    public String getRoomName() {
+        return room.getName();
     }
 
     public Outdoors.OutdoorsType getType() {
