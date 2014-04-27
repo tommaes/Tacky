@@ -271,7 +271,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         cv.put(TACKY_ENERGYGAIN, t.getEnergyGain());
         cv.put(TACKY_SATISFIEDLVL, t.getSatisfiedLevel());
         cv.put(TACKY_SATISFIEDGAIN, t.getSatisfiedGain());
-        cv.put(TACKY_CURRENTROOM, t.getCurrentRoom().getName());
+        cv.put(TACKY_CURRENTROOM, t.getRoomName());
         cv.put(TACKY_HEAD, head.getDatabaseId());
         cv.put(TACKY_BODY, body.getDatabaseId());
         cv.put(TACKY_EXPRESSION, exp.getDatabaseId());
@@ -292,7 +292,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         cv.put(TACKY_ENERGYGAIN, t.getEnergyGain());
         cv.put(TACKY_SATISFIEDLVL, t.getSatisfiedLevel());
         cv.put(TACKY_SATISFIEDGAIN, t.getSatisfiedGain());
-        cv.put(TACKY_CURRENTROOM, t.getCurrentRoom().getName());
+        cv.put(TACKY_CURRENTROOM, t.getRoomName());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(TACKY_TABLE, cv, TACKY_NAME + "=?", new String[]{t.getName()});
@@ -384,8 +384,15 @@ public class LocalDatabase extends SQLiteOpenHelper {
     }
 
     public synchronized  void storeRoom(Tacky owner){
-        Room r = owner.getCurrentRoom();
-        this.storeRoom(r, owner);
+        ContentValues cv = new ContentValues();
+        cv.put(ROOM_NAME, owner.getRoomName());
+        cv.put(ROOM_OWNER, owner.getName());
+        cv.put(ROOM_VISUAL, owner.getRoomVisualization());
+        cv.put(ROOM_TYPE, owner.getRoomType().ordinal());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.replace(ROOM_TABLE, null, cv); // replace entry if one already exists
+        db.close();
     }
 
     public synchronized void storeRoom(Room r, Tacky owner) {

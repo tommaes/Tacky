@@ -158,7 +158,7 @@ public class MainRoom extends Activity {
     }
 
     public void onDestroy(){
-        mainTackySurface.endTackyDisplay();
+        //mainTackySurface.endTackyDisplay();
         tackyThread.stopRunning();
         super.onDestroy();
         db.updateTackyWithoutRoom(this.tacky);

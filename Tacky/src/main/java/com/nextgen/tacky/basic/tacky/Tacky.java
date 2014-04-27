@@ -6,12 +6,12 @@ import android.text.format.Time;
 
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
-import com.nextgen.tacky.basic.State;
+import com.nextgen.tacky.basic.observer.Observable;
 
 /**
  * Created by maes on 23/10/13.
  */
-public class Tacky implements Parcelable {
+public class Tacky extends Observable implements Parcelable {
 
 
     private String name;
@@ -40,8 +40,7 @@ public class Tacky implements Parcelable {
 
     public Tacky(String n, long birthday,
                  TackyState tackyState,
-                 Room r, int h, int b, int e
-    ) {
+                 Room r, int h, int b, int e) {
         this.name = n;
         Time time = new Time();
         time.set(birthday);
@@ -88,15 +87,13 @@ public class Tacky implements Parcelable {
         return name;
     }
 
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
     public Time getDayOfBirth() {
         return dayOfBirth;
     }
 
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
+        super.notifyObservers();
     }
 
     public int getHeadId() {
@@ -121,6 +118,7 @@ public class Tacky implements Parcelable {
 
     public void calculateHappiness() {
         tackyState.calculateHappiness();
+        super.notifyObservers();
     }
 
     public TackyState.TackyStatus getCurrentStatus() {
@@ -129,6 +127,7 @@ public class Tacky implements Parcelable {
 
     public void calculateSatisfaction() {
         tackyState.calculateSatisfaction();
+        super.notifyObservers();
     }
 
     public double getMaxSatisfiedLevel() {
@@ -145,6 +144,7 @@ public class Tacky implements Parcelable {
 
     public void calculateEnergy() {
         tackyState.calculateEnergy();
+        super.notifyObservers();
     }
 
     public double getHappinessStateLevel() {
@@ -185,6 +185,23 @@ public class Tacky implements Parcelable {
 
     public double getHappinessLevel() {
         return tackyState.getHappinessLevel();
+    }
+
+    public String getRoomVisualization() {
+        return currentRoom.getVisualization();
+    }
+
+    public void setRoomVisualization(String visualization) {
+        currentRoom.setVisualization(visualization);
+        super.notifyObservers();
+    }
+
+    public Room.RoomType getRoomType() {
+        return currentRoom.getRoomType();
+    }
+
+    public String getRoomName() {
+        return currentRoom.getName();
     }
 
     @Override

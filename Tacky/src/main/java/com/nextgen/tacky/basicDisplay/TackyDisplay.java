@@ -85,7 +85,7 @@ public class TackyDisplay {
 
     public void display(Canvas canvas){
             if(tacky.isAlive()) {
-                switch(tacky.getCurrentRoom().getRoomType()) {
+                switch(tacky.getRoomType()) {
                     // first check for specific room
                     case BEDROOM: {
                         switch (tacky.getCurrentStatus()) {

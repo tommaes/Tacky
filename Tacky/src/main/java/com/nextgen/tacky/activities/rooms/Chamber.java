@@ -70,10 +70,7 @@ public class Chamber extends MainRoom {
             i.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Room currentRoom = tacky.getCurrentRoom();
-                    Room r = new Room(currentRoom.getName(), background, currentRoom.getRoomType());
-                    tacky.setCurrentRoom(r);
-                    mainTackySurface.newRoom(mainRoom, r);
+                    tacky.setRoomVisualization(background);
                     db.updateTacky(tacky);
                     db.storeRoom(tacky);
                     dialog.dismiss();

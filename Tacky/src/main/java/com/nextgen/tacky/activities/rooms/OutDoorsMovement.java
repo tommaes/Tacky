@@ -17,14 +17,17 @@ public class OutDoorsMovement extends Outdoors {
     public boolean onTouchEvent(MotionEvent event){
 
         switch (event.getAction()) {
+            // Start of press gesture
             case MotionEvent.ACTION_DOWN: {
                 mainTackySurface.moveTacky(event.getX(), event.getY());
                 break;
             }
+            // Movement
             case MotionEvent.ACTION_MOVE: {
                 mainTackySurface.moveTacky(event.getX(), event.getY());
                 break;
             }
+            // Press gesture has ended
             case MotionEvent.ACTION_UP: {
                 mainTackySurface.moveTacky(event.getX(), event.getY());
                 break;

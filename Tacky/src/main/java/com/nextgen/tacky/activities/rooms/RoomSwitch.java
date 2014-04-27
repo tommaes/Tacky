@@ -14,8 +14,7 @@ public class RoomSwitch {
 
     public static Intent roomSwitch(Context context, Tacky tacky){
         Intent intent = null;
-        Room room = tacky.getCurrentRoom();
-        switch (room.getRoomType()) {
+        switch (tacky.getRoomType()) {
             case BATHROOM: {
                 intent = new Intent(context, Bathroom.class);
                 tacky.setCurrentStatus(TackyState.TackyStatus.NORMAL);
