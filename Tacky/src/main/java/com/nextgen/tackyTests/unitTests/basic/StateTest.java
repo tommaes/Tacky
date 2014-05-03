@@ -21,16 +21,12 @@ public class StateTest extends TestCase {
 
     }
 
-    public void testGetStateLevel() throws Exception {
+    public void testGetSetGainingState() throws Exception {
 
         State state = new State(level, gaining);
+
         assertEquals(level, state.getStateLevel());
 
-    }
-
-    public void testSetGainingState() throws Exception {
-
-        State state = new State(level, gaining);
         double newGainingState = 2;
         state.setGainingState(newGainingState);
         assertEquals(newGainingState, state.getGainingState());
@@ -57,7 +53,7 @@ public class StateTest extends TestCase {
         State state = new State(level, gaining);
         state.writeToParcel(parcel, 0);
         parcel.setDataPosition(0);
-        State parcelState = new State(parcel);
+        State parcelState = State.CREATOR.createFromParcel(parcel);
 
         assertEquals(gaining, parcelState.getGainingState());
         assertEquals(level, parcelState.getStateLevel());

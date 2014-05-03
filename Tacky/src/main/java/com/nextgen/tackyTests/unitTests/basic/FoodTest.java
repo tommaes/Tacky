@@ -1,5 +1,7 @@
 package com.nextgen.tackyTests.unitTests.basic;
 
+import android.os.Parcel;
+
 import com.nextgen.tacky.basic.Food;
 
 import junit.framework.TestCase;
@@ -33,16 +35,27 @@ public class FoodTest extends TestCase {
         assertEquals(value, food.getEnergyValue());
     }
 
-    public void testTotalUses() throws Exception {
+    public void testTotalUsesAndCanStillBeUsed() throws Exception {
 
         Food food = new Food(name, visual, value, uses);
+
         assertEquals(uses, food.getTotalUses());
-    }
 
-    public void testCanStillBeUsed() throws Exception {
-
-        Food food = new Food(name, visual, value, uses);
         food.used();
         assertFalse(food.canStillBeUsed());
+    }
+
+    public void testParcel() throws Exception {
+
+        Parcel parcel = Parcel.obtain();
+        Food food = new Food(name, visual, value, uses);
+        food.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        Food parcelFood = Food.CREATOR.createFromParcel(parcel);
+
+        assertEquals(name, parcelFood.getName());
+        assertEquals(visual, parcelFood.getVisualization());
+        assertEquals(value, parcelFood.getEnergyValue());
+        assertEquals(uses, parcelFood.getTotalUses());
     }
 }
