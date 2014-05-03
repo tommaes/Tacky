@@ -57,7 +57,7 @@ public class TackyHead implements TackyDisplayCharacteristics, Parcelable {
     }
 
     private Bitmap getBitmap(LocalDatabase db, DisplayItem displayItem) {
-        if (displayItem.hasBitmap())
+        if (!displayItem.hasBitmap())
             displayItem.setBitmap(db.decodeImage(displayItem.getName()));
         return displayItem.getBitmap();
     }

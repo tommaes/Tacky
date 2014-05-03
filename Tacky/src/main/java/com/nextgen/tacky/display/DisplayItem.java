@@ -24,7 +24,7 @@ public class DisplayItem implements Parcelable {
     }
 
     public boolean hasBitmap() {
-        return this.bitmap== null;
+        return this.bitmap != null;
     }
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
