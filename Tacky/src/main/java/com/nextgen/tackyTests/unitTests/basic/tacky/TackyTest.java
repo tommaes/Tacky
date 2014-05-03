@@ -1,4 +1,4 @@
-package com.nextgen.tackyTests.unitTests.basic;
+package com.nextgen.tackyTests.unitTests.basic.tacky;
 
 import junit.framework.TestCase;
 

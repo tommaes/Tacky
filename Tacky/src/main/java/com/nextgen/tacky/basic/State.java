@@ -17,7 +17,7 @@ public class State implements Parcelable {
         this.stateLevel = state;
     }
 
-    State(Parcel p){
+    public State(Parcel p){
         this.gainingState = p.readDouble();
         this.stateLevel = p.readDouble();
     }
