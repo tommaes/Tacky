@@ -3,6 +3,8 @@ package com.nextgen.tacky.basic;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.nextgen.tacky.basic.observer.Observable;
+
 /**
  * Created by maes on 25/10/13.
  */

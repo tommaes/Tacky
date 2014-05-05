@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.db.LocalDatabase;
 
@@ -44,7 +44,7 @@ public class TackyExpression implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(LocalDatabase db, TackyState.TackyStatus tackyStatus, TackyState.TackyHappiness tackyHappiness){
+    public Bitmap getFront(LocalDatabase db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
         switch (tackyStatus) {
             case SLEEPING: {
@@ -52,7 +52,7 @@ public class TackyExpression implements Parcelable {
                 break;
             }
             default: {
-                switch (tackyHappiness) {
+                switch (moodValue) {
                     case HAPPY: {
                         displayItem = getFrontHappy(db);
                         break;
@@ -71,7 +71,7 @@ public class TackyExpression implements Parcelable {
         return displayItem;
     }
 
-    public Bitmap getSide(LocalDatabase db, TackyState.TackyStatus tackyStatus, TackyState.TackyHappiness tackyHappiness){
+    public Bitmap getSide(LocalDatabase db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
         switch (tackyStatus) {
             case SLEEPING: {
@@ -79,7 +79,7 @@ public class TackyExpression implements Parcelable {
                 break;
             }
             default: {
-                switch (tackyHappiness) {
+                switch (moodValue) {
                     case HAPPY: {
                         displayItem = getSideHappy(db);
                         break;

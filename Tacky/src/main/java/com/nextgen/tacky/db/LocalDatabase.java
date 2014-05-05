@@ -13,7 +13,8 @@ import android.text.format.Time;
 import com.nextgen.tacky.activities.rooms.Outdoors;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
-import com.nextgen.tacky.basic.State;
+import com.nextgen.tacky.basic.State.MoodState;
+import com.nextgen.tacky.basic.State.State;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.display.TackyBody;
@@ -227,7 +228,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
             double energyGain = cur.getDouble(cur.getColumnIndex(TACKY_ENERGYGAIN));
             double satisfiedLevel = cur.getDouble(cur.getColumnIndex(TACKY_SATISFIEDLVL));
             double satisfiedGain = cur.getDouble(cur.getColumnIndex(TACKY_SATISFIEDGAIN));
-            State happiness = new State(happinessLevel, happinessGain);
+            MoodState happiness = new MoodState(happinessLevel, happinessGain);
             State energy = new State(energyLevel, energyGain);
             State satisfied = new State(satisfiedLevel, satisfiedGain);
             TackyState tackyState = new TackyState(happiness, energy, satisfied);

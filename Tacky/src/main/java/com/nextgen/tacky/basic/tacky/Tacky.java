@@ -6,6 +6,7 @@ import android.text.format.Time;
 
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
+import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.observer.Observable;
 
 /**
@@ -116,18 +117,15 @@ public class Tacky extends Observable implements Parcelable {
         tackyState.move();
     }
 
-    public void calculateHappiness() {
+    public void calculateStates() {
+        tackyState.calculateEnergy();
+        tackyState.calculateSatisfaction();
         tackyState.calculateHappiness();
         super.notifyObservers();
     }
 
     public TackyState.TackyStatus getCurrentStatus() {
         return tackyState.getCurrentStatus();
-    }
-
-    public void calculateSatisfaction() {
-        tackyState.calculateSatisfaction();
-        super.notifyObservers();
     }
 
     public double getMaxSatisfiedLevel() {
@@ -138,13 +136,8 @@ public class Tacky extends Observable implements Parcelable {
         return tackyState.getEnergyLevel();
     }
 
-    public TackyState.TackyHappiness getTackyHappiness() {
-        return tackyState.getTackyHappiness();
-    }
-
-    public void calculateEnergy() {
-        tackyState.calculateEnergy();
-        super.notifyObservers();
+    public MoodState.MoodValue getTackyHappiness() {
+        return tackyState.getMoodValue();
     }
 
     public double getHappinessStateLevel() {

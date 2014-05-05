@@ -2,7 +2,7 @@ package com.nextgen.tackyTests.unitTests.basic;
 
 import android.os.Parcel;
 
-import com.nextgen.tacky.basic.State;
+import com.nextgen.tacky.basic.State.State;
 
 import junit.framework.TestCase;
 

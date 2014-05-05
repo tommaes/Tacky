@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.nextgen.tacky.basic.Food;
-import com.nextgen.tacky.basic.State;
+import com.nextgen.tacky.basic.State.MoodState;
+import com.nextgen.tacky.basic.State.State;
 
 /**
  * Created by maes on 19/04/14.
@@ -17,33 +18,28 @@ public class TackyState implements Parcelable {
         TRYTOSLEEP
     }
 
-    public enum TackyHappiness {
-        HAPPY,
-        NORMAL,
-        SAD
-    }
-
-    private double happiness;
-    private State happinessState;
+    private MoodState moodState;
     private State energy;
     private State satisfied;
 
     private TackyStatus currentStatus = TackyStatus.NORMAL;
-    private TackyHappiness tackyHappiness;
 
     private final double startValue = 75;
     private final float sleepValue = 0.0015f;
     private final float awakeValue = -0.0015f;
 
+    private final double moveGain = 0.001;
+    private final double moveCost = -0.00001;
+
     public TackyState() {
-        this.happinessState = new State(0, awakeValue / 5);
+        this.moodState = new MoodState(0, awakeValue / 5);
         this.energy = new State(startValue, awakeValue);
         this.satisfied = new State(startValue, awakeValue);
         calculateHappiness();
     }
 
-    public TackyState(State happinessState, State energy, State satisfied) {
-        this.happinessState = happinessState;
+    public TackyState(MoodState moodState, State energy, State satisfied) {
+        this.moodState = moodState;
         this.energy = energy;
         this.satisfied = satisfied;
         calculateHappiness();
@@ -51,7 +47,7 @@ public class TackyState implements Parcelable {
 
     public TackyState(Parcel p){
 
-        this.happinessState = p.readParcelable(State.class.getClassLoader());
+        this.moodState = p.readParcelable(MoodState.class.getClassLoader());
         this.energy = p.readParcelable(State.class.getClassLoader());
         this.satisfied = p.readParcelable(State.class.getClassLoader());
         this.currentStatus = TackyStatus.valueOf(p.readString());
@@ -59,14 +55,7 @@ public class TackyState implements Parcelable {
     }
 
     public synchronized void calculateHappiness(){
-        double minimum = Math.min(energy.getStateLevel(), satisfied.getStateLevel());
-        if (minimum > 50)
-            happiness = (energy.getStateLevel() + satisfied.getStateLevel()) / 2;
-        else happiness = minimum;
-        happiness += happinessState.getStateLevel();
-        happiness = Math.min(happiness, 100);
-        happinessState.calculateState();
-        setTackyHappiness();
+        moodState.calculateHappiness(energy.getStateLevel(), satisfied.getStateLevel());
     }
 
     public synchronized void calculateEnergy(){
@@ -83,28 +72,6 @@ public class TackyState implements Parcelable {
 
     public synchronized double getMaxEnergyLevel() {
         return energy.getMaxLevel();
-    }
-
-
-
-    public synchronized double getHappinessLevel() {
-        return happiness;
-    }
-
-    public double getHappinessStateLevel(){
-        return happinessState.getStateLevel();
-    }
-
-    public synchronized void addHappinessStateLevel(double lvl){
-        this.happinessState.addState(lvl);
-    }
-
-    public Double getHappinessGain() {
-        return happinessState.getGainingState();
-    }
-
-    public double getMaxHappinessLevel() {
-        return happinessState.getMaxLevel();
     }
 
     public synchronized void calculateSatisfaction(){
@@ -145,27 +112,33 @@ public class TackyState implements Parcelable {
         }
     }
 
-    public TackyHappiness getTackyHappiness() {
-        return tackyHappiness;
+    public synchronized double getHappinessLevel() {
+        return moodState.getHappinessValue();
     }
 
-    private void setTackyHappiness(){
-        if (this.happiness > 75)
-            this.tackyHappiness = TackyHappiness.HAPPY;
-        else {
-            if (this.happiness > 30)
-                this.tackyHappiness = TackyHappiness.NORMAL;
-            else this.tackyHappiness = TackyHappiness.SAD;
-        }
+    public double getHappinessStateLevel(){
+        return moodState.getStateLevel();
+    }
+
+    public Double getHappinessGain() {
+        return moodState.getGainingState();
+    }
+
+    public double getMaxHappinessLevel() {
+        return moodState.getMaxLevel();
+    }
+
+    public MoodState.MoodValue getMoodValue() {
+        return moodState.getMoodValue();
     }
 
     public boolean isAlive(){
-        return (energy.getStateLevel() > 0) && (satisfied.getStateLevel() > 0);
+        return (energy.aboveMinimum() && satisfied.aboveMinimum());
     }
 
     public void move(){
-        this.happinessState.addState(0.001);
-        this.energy.addState(-0.00001);
+        this.moodState.addState(moveGain);
+        this.energy.addState(moveCost);
     }
 
     public static final TackyState.Creator<TackyState> CREATOR = new TackyState.Creator<TackyState>(){
@@ -188,7 +161,7 @@ public class TackyState implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.happinessState, flags);
+        dest.writeParcelable(this.moodState, flags);
         dest.writeParcelable(this.energy, flags);
         dest.writeParcelable(this.satisfied, flags);
         dest.writeString(this.currentStatus.toString());

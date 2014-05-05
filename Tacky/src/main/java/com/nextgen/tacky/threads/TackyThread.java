@@ -24,9 +24,7 @@ public class TackyThread implements Runnable {
     @Override
     public void run() {
         while(tacky.isAlive() && keepRunning){
-            tacky.calculateEnergy();
-            tacky.calculateSatisfaction();
-            tacky.calculateHappiness();
+            tacky.calculateStates();
 
             db.updateTackyWithoutRoom(tacky);
 

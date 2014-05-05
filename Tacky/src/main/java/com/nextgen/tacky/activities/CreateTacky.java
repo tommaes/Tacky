@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.rooms.RoomSwitch;
+import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.db.LocalDatabase;
@@ -153,13 +154,13 @@ public class CreateTacky extends Activity {
         imageParams.setMargins(10, 0, 10, 0);
         for(final TackyExpression e : expressions){
             ImageView i = new ImageView(this);
-            i.setImageBitmap(e.getFront(db, TackyState.TackyStatus.NORMAL, TackyState.TackyHappiness.HAPPY));
+            i.setImageBitmap(e.getFront(db, TackyState.TackyStatus.NORMAL, MoodState.MoodValue.HAPPY));
             i.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
                     expression = e;
-                    Bitmap eb = e.getFront(db, TackyState.TackyStatus.NORMAL, TackyState.TackyHappiness.HAPPY).copy(Bitmap.Config.ARGB_8888, true);
+                    Bitmap eb = e.getFront(db, TackyState.TackyStatus.NORMAL, MoodState.MoodValue.HAPPY).copy(Bitmap.Config.ARGB_8888, true);
                     Bitmap bitmap = Bitmap.createBitmap(eb.getWidth(), eb.getHeight(),Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bitmap);
                     imageView.draw(canvas);

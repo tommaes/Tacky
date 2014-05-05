@@ -1,4 +1,4 @@
-package com.nextgen.tacky.basic;
+package com.nextgen.tacky.basic.State;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,9 +8,10 @@ import android.os.Parcelable;
  */
 public class State implements Parcelable {
 
-    private static final double maxLevel = 100;
-    private double gainingState;
-    private double stateLevel;
+    protected static final double maxLevel = 100;
+    protected static final double minLevel = 0;
+    protected double gainingState;
+    protected double stateLevel;
 
     public State(double state, double gaining){
         this.gainingState = gaining;
@@ -45,18 +46,20 @@ public class State implements Parcelable {
 
 
     public void calculateState(){
-        this.stateLevel = Math.min(Math.max(0, stateLevel + gainingState), 100);
+        stateLevel = Math.min(Math.max(minLevel, stateLevel + gainingState), maxLevel);
     }
 
     public void addState(double value){
-        this.stateLevel = Math.max(Math.min(this.stateLevel + value, 100), 0);
+        stateLevel = Math.max(Math.min(this.stateLevel + value, maxLevel), minLevel);
     }
 
     public void setGainingState(double gainingState) {
         this.gainingState = gainingState;
     }
 
-
+    public boolean aboveMinimum() {
+        return stateLevel > 0;
+    }
 
     @Override
     public int describeContents() {
