@@ -10,6 +10,7 @@ import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.observer.Observable;
 import com.nextgen.tacky.basic.observer.Observer;
 import com.nextgen.tacky.basic.tacky.Tacky;
+import com.nextgen.tacky.basicDisplay.NILLDisplay;
 import com.nextgen.tacky.basicDisplay.RoomDisplay;
 import com.nextgen.tacky.basicDisplay.TackyDisplay;
 
@@ -21,7 +22,6 @@ public class MainTackySurface extends SurfaceView implements SurfaceHolder.Callb
 
     private Tacky tacky;
     private MainRoom parentActivity;
-    private RoomDisplay roomDisplay;
     private TackyDisplay tackyDisplay;
     private SurfaceHolder surfaceHolder;
 
@@ -29,8 +29,12 @@ public class MainTackySurface extends SurfaceView implements SurfaceHolder.Callb
         super(context);
         this.tacky = t;
         this.parentActivity = p;
-        this.tackyDisplay = new TackyDisplay(context, this.tacky);
-        this.roomDisplay = new RoomDisplay(context, this.tacky);
+
+        NILLDisplay nillDisplay = new NILLDisplay();
+        RoomDisplay roomDisplay = new RoomDisplay(context, this.tacky, nillDisplay);
+        this.tackyDisplay = new TackyDisplay(context, this.tacky, roomDisplay);
+
+
         surfaceHolder.addCallback(this);
         this.surfaceHolder = surfaceHolder;
         tacky.addObserver(this);
@@ -71,7 +75,6 @@ public class MainTackySurface extends SurfaceView implements SurfaceHolder.Callb
         if(surfaceHolder.getSurface().isValid()){
             Canvas canvas = surfaceHolder.lockCanvas();
             canvas.restore();
-            roomDisplay.display(canvas);
             tackyDisplay.display(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }

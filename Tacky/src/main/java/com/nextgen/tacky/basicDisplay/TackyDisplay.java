@@ -14,10 +14,11 @@ import com.nextgen.tacky.db.LocalDatabase;
 /**
  * Created by maes on 29/10/13.
  */
-public class TackyDisplay {
+public class TackyDisplay implements Display {
 
     private Tacky tacky;
     private Bitmap rip;
+    protected Display display;
 
     private float xPosition;
     private float yPosition;
@@ -39,13 +40,14 @@ public class TackyDisplay {
         UPRIGHT
     }
 
-    public TackyDisplay(Context context, Tacky t) {
+    public TackyDisplay(Context context, Tacky t, Display display) {
         this.tacky = t;
         int imageResource2 = context.getResources().getIdentifier("rip", "drawable", MainRoom.MAIN_TACKY_PACKAGE);
         this.rip = BitmapFactory.decodeResource(context.getResources(), imageResource2);
         this.localDatabase = new LocalDatabase(context);
         this.tackyDisplayObject = localDatabase.getTackyDisplayObject(t);
         this.tackyPosition = TackyPosition.NORMAL;
+        this.display = display;
     }
 
     public synchronized void changeMiddle(float w, float h) {
@@ -84,6 +86,7 @@ public class TackyDisplay {
     }
 
     public void display(Canvas canvas){
+        display.display(canvas);
             if(tacky.isAlive()) {
                 switch(tacky.getRoomType()) {
                     // first check for specific room
@@ -142,7 +145,7 @@ public class TackyDisplay {
             }
     }
 
-    public void displayFrontTacky(Canvas canvas){
+    private void displayFrontTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
             Bitmap body = tackyDisplayObject.getBodyFront(localDatabase);
             Bitmap head = tackyDisplayObject.getHeadFront(localDatabase);
@@ -152,7 +155,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayFrontTackyReadyToSleep(Canvas canvas){
+    private void displayFrontTackyReadyToSleep(Canvas canvas){
         if (this.tackyDisplayObject != null) {
             Bitmap body = tackyDisplayObject.getBodySleep(localDatabase);
             Bitmap head = tackyDisplayObject.getHeadSleep(localDatabase);
@@ -162,7 +165,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayFrontTackySleep(Canvas canvas){
+    private void displayFrontTackySleep(Canvas canvas){
         if (this.tackyDisplayObject != null) {
             Bitmap body = tackyDisplayObject.getBodySleep(localDatabase);
             Bitmap head = tackyDisplayObject.getHeadSleep(localDatabase);
@@ -172,7 +175,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayLeftNormalTacky(Canvas canvas){
+    private void displayLeftNormalTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
 
             Bitmap body = tackyDisplayObject.getBodySide(localDatabase);
@@ -183,7 +186,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayRightNormalTacky(Canvas canvas){
+    private void displayRightNormalTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
             Matrix matrix = new Matrix();
             matrix.setScale(-1, 1);
@@ -200,7 +203,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayLeftUpTacky(Canvas canvas){
+    private void displayLeftUpTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
 
             Bitmap body = tackyDisplayObject.getBodyUp(localDatabase);
@@ -211,7 +214,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayRightUpTacky(Canvas canvas){
+    private void displayRightUpTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
             Matrix matrix = new Matrix();
             matrix.setScale(-1, 1);
@@ -228,7 +231,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayLeftDownTacky(Canvas canvas){
+    private void displayLeftDownTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
 
             Bitmap body = tackyDisplayObject.getBodyDown(localDatabase);
@@ -239,7 +242,7 @@ public class TackyDisplay {
         }
     }
 
-    public void displayRightDownTacky(Canvas canvas){
+    private void displayRightDownTacky(Canvas canvas){
         if (this.tackyDisplayObject != null) {
             Matrix matrix = new Matrix();
             matrix.setScale(-1, 1);

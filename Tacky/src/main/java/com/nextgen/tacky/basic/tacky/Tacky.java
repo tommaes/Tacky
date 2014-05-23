@@ -54,6 +54,17 @@ public class Tacky extends Observable implements Parcelable {
 
     }
 
+    public Tacky(String name, long birthday, TackyState tackyState, int headId, int bodyId, int expressionId) {
+        this.name = name;
+        Time time = new Time();
+        time.set(birthday);
+        this.dayOfBirth = time;
+        this.tackyState = tackyState;
+        headId = headId;
+        bodyId = bodyId;
+        expressionId = expressionId;
+    }
+
     Tacky(Parcel p) {
         this.name = p.readString();
 
@@ -94,7 +105,6 @@ public class Tacky extends Observable implements Parcelable {
 
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
-        super.notifyObservers();
     }
 
     public int getHeadId() {

@@ -14,6 +14,10 @@ import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.rooms.RoomSwitch;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.localDB.Room_DB;
+import com.nextgen.tacky.db.localDB.Tacky_DB;
+
+import java.util.ArrayList;
 
 /**
  * Created by maes on 2/11/13.
@@ -21,12 +25,13 @@ import com.nextgen.tacky.db.LocalDatabase;
 public class LoadSavedTackys extends Activity {
 
     protected void onCreate(Bundle savedInstanceState){
+        final Tacky_DB tacky_db = new Tacky_DB(this);
+        final Room_DB room_db = new Room_DB(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_saved_tackys);
         LinearLayout l = (LinearLayout) findViewById(R.id.savedTackys);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final LocalDatabase db = new LocalDatabase(this);
-        String[] names = db.getTackyNames();
+        ArrayList<String> names = tacky_db.getTackyNames();
         final Context context = this;
         for(final String name : names){
             TextView text = new TextView(this);
@@ -36,7 +41,8 @@ public class LoadSavedTackys extends Activity {
             text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Tacky tacky = db.getTacky(name);
+                        Tacky tacky = tacky_db.getTacky(name);
+                        tacky.setCurrentRoom(room_db.getRoom(tacky.getRoomName(), tacky.getName()));
                         Intent intent = new RoomSwitch().roomSwitch(context, tacky);
                         startActivity(intent);
                         finish();
@@ -44,7 +50,7 @@ public class LoadSavedTackys extends Activity {
                 });
                 l.addView(text, imageParams);
         }
-        if(names.length == 0){
+        if(names.size() == 0){
             TextView text = new TextView(this);
             text.setText("There are no Tackys created yet.");
             text.setTextSize(50);

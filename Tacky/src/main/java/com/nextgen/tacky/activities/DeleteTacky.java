@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.localDB.Room_DB;
+import com.nextgen.tacky.db.localDB.Tacky_DB;
+
+import java.util.ArrayList;
 
 /**
  * Created by maes on 2/11/13.
@@ -26,10 +30,11 @@ public class DeleteTacky extends Activity {
     }
 
     public void displayTackys(final LinearLayout l){
+        final Tacky_DB tacky_db = new Tacky_DB(this);
+        final Room_DB room_db = new Room_DB(this);
         l.removeAllViews();
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final LocalDatabase db = new LocalDatabase(this);
-        String[] names = db.getTackyNames();
+        ArrayList<String> names = tacky_db.getTackyNames();
         for(final String name : names){
             TextView text = new TextView(this);
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -49,7 +54,8 @@ public class DeleteTacky extends Activity {
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            db.deleteTacky(name);
+                            tacky_db.deleteTacky(name);
+                            room_db.deleteRooms(name);
                             dialog.cancel();
                             displayTackys(l);
                         }
@@ -60,7 +66,7 @@ public class DeleteTacky extends Activity {
             });
             l.addView(text, imageParams);
         }
-        if(names.length == 0){
+        if(names.size() == 0){
             TextView text = new TextView(this);
             text.setText("There are no Tackys available to delete.");
             text.setTextSize(50);

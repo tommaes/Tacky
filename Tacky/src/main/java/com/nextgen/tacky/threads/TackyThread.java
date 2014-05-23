@@ -2,6 +2,7 @@ package com.nextgen.tacky.threads;
 
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.localDB.Tacky_DB;
 
 /**
  * Created by maes on 3/11/13.
@@ -9,12 +10,12 @@ import com.nextgen.tacky.db.LocalDatabase;
 public class TackyThread implements Runnable {
 
     private Tacky tacky;
-    private LocalDatabase db;
+    private Tacky_DB db;
     private Thread thread;
     private boolean keepRunning = true;
 
 
-    public TackyThread(Tacky t, LocalDatabase db){
+    public TackyThread(Tacky t, Tacky_DB db){
         tacky = t;
         this.db = db;
         thread = new Thread(this);

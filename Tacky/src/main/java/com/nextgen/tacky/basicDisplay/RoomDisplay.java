@@ -14,21 +14,24 @@ import com.nextgen.tacky.basic.tacky.Tacky;
 /**
  * Created by maes on 29/10/13.
  */
-public class RoomDisplay {
+public class RoomDisplay implements Display {
 
     private Bitmap bitmap;
     private Tacky tacky;
     private Context context;
     private int imageResource;
+    private Display display;
 
-    public RoomDisplay(Context context, Tacky tacky) {
+    public RoomDisplay(Context context, Tacky tacky, Display display) {
         this.context = context;
         this.tacky = tacky;
+        this.display = display;
         this.imageResource = context.getResources().getIdentifier(tacky.getRoomVisualization(), "drawable", MainRoom.MAIN_TACKY_PACKAGE);
         this.bitmap = BitmapFactory.decodeResource(context.getResources(), imageResource);
     }
 
     public void display(Canvas canvas){
+        display.display(canvas);
         int iR = context.getResources().getIdentifier(tacky.getRoomVisualization(), "drawable", MainRoom.MAIN_TACKY_PACKAGE);
         if(iR != imageResource) {
             this.bitmap = BitmapFactory.decodeResource(context.getResources(), iR);
