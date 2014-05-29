@@ -77,8 +77,8 @@ public class Tacky_DB {
             db = LocalDatabase.getDatabase(ctx);
     }
 
-    public static void initializeTable(SQLiteDatabase db) {
-        db.execSQL(TACKY_SQL_CREATE);
+    public static void initializeTable(LocalDatabase db) {
+        db.addTable(TACKY_SQL_CREATE);
     }
 
     public ArrayList<String> getTackyNames() {
@@ -191,4 +191,7 @@ public class Tacky_DB {
         });
     }
 
+    public static void dropTable(LocalDatabase db, String dropTable) {
+        db.dropTable(dropTable + TACKY_TABLE);
+    }
 }

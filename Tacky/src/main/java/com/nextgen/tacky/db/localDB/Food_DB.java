@@ -37,18 +37,29 @@ public class Food_DB {
             db = LocalDatabase.getDatabase(ctx);
     }
 
-    public static void initializeTable(SQLiteDatabase db) {
-        db.execSQL(FOOD_SQL_CREATE);
+    public static void initializeTable(LocalDatabase db) {
+        db.addTable(FOOD_SQL_CREATE);
 
         // basic food
         Food f1 = new Food("Bread", "brood", 10, -1);
         Food f2 = new Food("Orange juice", "orangejuice", 5, -1);
         Food f3 = new Food("Yoghurt", "yoghurt", 3, -1);
-        // onCreate requires that we use the db object it provides
-        // Otherwise we get 'getWritableDatabase called recursively' error
-        //storeFood(f1, db);
-        //storeFood(f2, db);
-        //storeFood(f3, db);
+
+        StoreCommand<Food> command = new StoreCommand<Food>() {
+            @Override
+            public ContentValues storeItem(Food item) {
+                ContentValues cv = new ContentValues();
+                cv.put(FOOD_NAME, item.getName());
+                cv.put(FOOD_VISUAL, item.getVisualization());
+                cv.put(FOOD_ENERGY, item.getEnergyValue());
+                cv.put(FOOD_USES, item.getTotalUses());
+
+                return cv;
+            }
+        };
+        db.insertValue(FOOD_TABLE, f1, command);
+        db.insertValue(FOOD_TABLE, f2, command);
+        db.insertValue(FOOD_TABLE, f3, command);
     }
 
     public ArrayList<Food> getFoods() {
@@ -87,4 +98,7 @@ public class Food_DB {
                        new String[]{food.getName()});
     }
 
+    public static void dropTable(LocalDatabase db, String dropTable) {
+        db.dropTable(dropTable + FOOD_TABLE);
+    }
 }

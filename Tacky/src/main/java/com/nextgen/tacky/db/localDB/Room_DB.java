@@ -52,8 +52,8 @@ public class Room_DB {
         db.deleteValue(ROOM_TABLE, ROOM_OWNER + "=?", args);
     }
 
-    public static void initializeTable(SQLiteDatabase db) {
-        db.execSQL(ROOM_SQL_CREATE);
+    public static void initializeTable(LocalDatabase db) {
+        db.addTable(ROOM_SQL_CREATE);
     }
 
     public void initializeTackyRooms(Tacky tacky){
@@ -141,4 +141,7 @@ public class Room_DB {
         });
     }
 
+    public static void dropTable(LocalDatabase db, String dropTable) {
+        db.dropTable(dropTable + ROOM_TABLE);
+    }
 }

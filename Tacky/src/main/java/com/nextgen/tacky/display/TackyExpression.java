@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.localDB.TackyExpression_DB;
 
 /**
  * Created by maes on 14/11/13.
@@ -44,7 +45,7 @@ public class TackyExpression implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(LocalDatabase db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
+    public Bitmap getFront(TackyExpression_DB db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
         switch (tackyStatus) {
             case SLEEPING: {
@@ -71,7 +72,7 @@ public class TackyExpression implements Parcelable {
         return displayItem;
     }
 
-    public Bitmap getSide(LocalDatabase db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
+    public Bitmap getSide(TackyExpression_DB db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
         switch (tackyStatus) {
             case SLEEPING: {
@@ -98,35 +99,35 @@ public class TackyExpression implements Parcelable {
         return displayItem;
     }
 
-    private Bitmap getFrontHappy(LocalDatabase db) {
+    private Bitmap getFrontHappy(TackyExpression_DB db) {
         return getBitmap(db, frontHappy);
     }
 
-    private Bitmap getFrontNormal(LocalDatabase db) {
+    private Bitmap getFrontNormal(TackyExpression_DB db) {
         return getBitmap(db, frontNormal);
     }
 
-    private Bitmap getFrontSad(LocalDatabase db) {
+    private Bitmap getFrontSad(TackyExpression_DB db) {
         return getBitmap(db, frontSad);
     }
 
-    private Bitmap getSideHappy(LocalDatabase db) {
+    private Bitmap getSideHappy(TackyExpression_DB db) {
         return getBitmap(db, sideHappy);
     }
 
-    private Bitmap getSideNormal(LocalDatabase db) {
+    private Bitmap getSideNormal(TackyExpression_DB db) {
         return getBitmap(db, sideNormal);
     }
 
-    private Bitmap getSideSad(LocalDatabase db) {
+    private Bitmap getSideSad(TackyExpression_DB db) {
         return getBitmap(db, sideSad);
     }
 
-    public Bitmap getSleep(LocalDatabase db) {
+    public Bitmap getSleep(TackyExpression_DB db) {
         return getBitmap(db, sleep);
     }
 
-    private Bitmap getBitmap(LocalDatabase db, DisplayItem displayItem) {
+    private Bitmap getBitmap(TackyExpression_DB db, DisplayItem displayItem) {
         if (!displayItem.hasBitmap())
             displayItem.setBitmap(db.decodeImage(displayItem.getName()));
         return displayItem.getBitmap();

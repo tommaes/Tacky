@@ -5,11 +5,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.localDB.TackyBody_DB;
+import com.nextgen.tacky.db.localDB.TackyHead_DB;
 
 /**
  * Created by maes on 14/11/13.
  */
-public class TackyHead implements TackyDisplayCharacteristics, Parcelable {
+public class TackyHead implements Parcelable {
 
     private DisplayItem front;
     private DisplayItem side;
@@ -36,27 +38,27 @@ public class TackyHead implements TackyDisplayCharacteristics, Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(LocalDatabase db) {
+    public Bitmap getFront(TackyHead_DB db) {
         return getBitmap(db, front);
     }
 
-    public Bitmap getSide(LocalDatabase db) {
+    public Bitmap getSide(TackyHead_DB db) {
         return getBitmap(db, side);
     }
 
-    public Bitmap getSleep(LocalDatabase db) {
+    public Bitmap getSleep(TackyHead_DB db) {
         return getBitmap(db, sleep);
     }
 
-    public Bitmap getUp(LocalDatabase db) {
+    public Bitmap getUp(TackyHead_DB db) {
         return getBitmap(db, up);
     }
 
-    public Bitmap getDown(LocalDatabase db) {
+    public Bitmap getDown(TackyHead_DB db) {
         return getBitmap(db, down);
     }
 
-    private Bitmap getBitmap(LocalDatabase db, DisplayItem displayItem) {
+    private Bitmap getBitmap(TackyHead_DB db, DisplayItem displayItem) {
         if (!displayItem.hasBitmap())
             displayItem.setBitmap(db.decodeImage(displayItem.getName()));
         return displayItem.getBitmap();

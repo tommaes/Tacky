@@ -14,6 +14,23 @@ public class Location_DB {
 
     private static LocalDatabase db = null;
 
+    /*
+    private static final String LOCATION_ID = "id";
+    private static final String LOCATION_NAME = "name";
+    private static final String LOCATION_LAT = "lat";
+    private static final String LOCATION_LONG = "long";
+    private static final String LOCATION_RADIUS = "radius";
+    private static final String LOCATION_TYPE = "type";
+    */
+
+    /*private static final String LOCATION_SQL_CREATE = "CREATE TABLE " + LOCATION_TABLE + " (" +
+            LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            LOCATION_NAME + " TEXT," +
+            LOCATION_LAT + " FLOAT(9,6)," +
+            LOCATION_LONG + " FLOAT(9,6)," +
+            LOCATION_RADIUS + " INTEGER," +
+            LOCATION_TYPE + " INTEGER)";*/
+
     public Location_DB(Context context){
         if(db == null)
             db = LocalDatabase.getDatabase(context);

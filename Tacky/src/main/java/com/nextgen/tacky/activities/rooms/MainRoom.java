@@ -45,7 +45,6 @@ import java.util.Arrays;
 public class MainRoom extends Activity {
 
     protected Tacky tacky;
-    protected LocalDatabase db;
     public static String MAIN_TACKY_PACKAGE;
     protected MainTackySurface mainTackySurface;
     private TackyThread tackyThread;
@@ -59,7 +58,6 @@ public class MainRoom extends Activity {
         setContentView(R.layout.activity_main_tacky);
         Intent i = getIntent();
         this.tacky = i.getParcelableExtra(Tacky.TACKY);
-        this.db = new LocalDatabase(this);
         SurfaceView surf = (SurfaceView) findViewById(R.id.roomView);
         SurfaceHolder sh = surf.getHolder();
         MAIN_TACKY_PACKAGE = getApplicationContext().getPackageName();

@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.display.TackyHead;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 public class TackyHead_DB {
 
     private static LocalDatabase db = null;
+    private Context context;
+
+    private static final String[] colors = {"green", "orange", "pink", "red", "turquoise", "yellow"};
 
     private static final String HEAD_TABLE = "heads";
 
@@ -40,10 +45,32 @@ public class TackyHead_DB {
     public TackyHead_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
+        context = ctx;
     }
 
-    public static void initializeTable(SQLiteDatabase db) {
-        db.execSQL(HEAD_SQL_CREATE);
+    public static void initializeTable(LocalDatabase db) {
+        db.addTable(HEAD_SQL_CREATE);
+
+        for (String color : colors) {
+            final String normal = "head_normal_" + color;
+            final String bonnet = "bonnet_head_normal_" + color;
+            final String up = "head_up_" + color;
+            final String down = "head_down_" + color;
+            TackyHead tackyHead = new TackyHead(normal, bonnet, up, down, 0);
+            db.insertValue(HEAD_TABLE, tackyHead, new StoreCommand<TackyHead>() {
+                @Override
+                public ContentValues storeItem(TackyHead item) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(HEAD_BONNET, bonnet);
+                    cv.put(HEAD_NORMAL, normal);
+                    cv.put(HEAD_UP, up);
+                    cv.put(HEAD_DOWN, down);
+
+                    return cv;
+                }
+            });
+        }
+
     }
 
     public ArrayList<TackyHead> getHeads() {
@@ -76,21 +103,12 @@ public class TackyHead_DB {
         });
     }
 
-    private void storeHead(final String normal, final String bonnet, final String up, final String down) {
-        TackyHead tackyHead = new TackyHead(normal, bonnet, up, down, 0);
-        db.insertValue(HEAD_TABLE, tackyHead, new StoreCommand<TackyHead>() {
-            @Override
-            public ContentValues storeItem(TackyHead item) {
-                ContentValues cv = new ContentValues();
-                cv.put(HEAD_BONNET, bonnet);
-                cv.put(HEAD_NORMAL, normal);
-                cv.put(HEAD_UP, up);
-                cv.put(HEAD_DOWN, down);
-
-                return cv;
-            }
-        });
+    public Bitmap decodeImage(String name) {
+        int imageResource = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        return BitmapFactory.decodeResource(context.getResources(), imageResource);
     }
 
-
+    public static void dropTable(LocalDatabase db, String dropTable) {
+        db.dropTable(dropTable + HEAD_TABLE);
+    }
 }
