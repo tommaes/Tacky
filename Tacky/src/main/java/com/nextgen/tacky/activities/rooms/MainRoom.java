@@ -166,6 +166,7 @@ public class MainRoom extends Activity {
         Tacky_DB tacky_db = new Tacky_DB(this);
         tackyThread.stopRunning();
         tacky_db.updateTackyWithoutRoom(this.tacky);
+        disableNfcAdapterDispatch();
         super.onDestroy();
     }
 
@@ -177,8 +178,8 @@ public class MainRoom extends Activity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         disableNfcAdapterDispatch();
+        super.onPause();
     }
 
 
@@ -246,11 +247,12 @@ public class MainRoom extends Activity {
                             p.setDataPosition(0); // crucial!
                             Food f = Food.CREATOR.createFromParcel(p);
                             p.recycle();
-
+                            /*
                             Log.i("NFC", "name " + f.getName());
                             Log.i("NFC", "vis " + f.getVisualization());
                             Log.i("NFC", "energy " + f.getEnergyValue());
                             Log.i("NFC", "uses " + f.getTotalUses());
+                            */
                             newFood(f);
                         }
                     }
