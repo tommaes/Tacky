@@ -1,9 +1,8 @@
-package com.nextgen.tacky.db;
+package com.nextgen.tacky.basic;
 
 import android.location.Location;
 
 import com.nextgen.tacky.activities.rooms.Outdoors;
-import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
 
 /**
@@ -15,16 +14,19 @@ public class TackyLocation {
     private Location location;
     private double radius;
 
-    public TackyLocation(String name, String image, Outdoors.OutdoorsType type, Location loc, double radius) {
-        this.room = new Room(name, image, Room.RoomType.OUTDOORS);
-        this.type = type;
-        this.location = loc;
-        this.radius = radius;
-    }
-
     public TackyLocation(String name, String image, Outdoors.OutdoorsType type, double latitude, double longitude, double radius) {
         this.room = new Room(name, image, Room.RoomType.OUTDOORS);
         this.type = type;
+        this.radius = radius;
+
+        this.location = new Location("TACKY_LOCATION");
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+    }
+
+    public TackyLocation(String name, String image, int type, double latitude, double longitude, double radius) {
+        this.room = new Room(name, image, Room.RoomType.OUTDOORS);
+        this.type = Outdoors.OutdoorsType.values()[type];
         this.radius = radius;
 
         this.location = new Location("TACKY_LOCATION");
@@ -62,5 +64,17 @@ public class TackyLocation {
 
     public boolean isSameLocation(TackyLocation location){
         return this.isSameLocation(location.getLocation());
+    }
+
+    public String getVisualization() {
+        return room.getVisualization();
+    }
+
+    public double getLatitude() {
+        return location.getLatitude();
+    }
+
+    public double getLongitude() {
+        return location.getLongitude();
     }
 }

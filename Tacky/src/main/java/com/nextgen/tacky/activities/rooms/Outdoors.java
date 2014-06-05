@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
-import com.nextgen.tacky.db.TackyLocation;
+import com.nextgen.tacky.basic.TackyLocation;
 import com.nextgen.tacky.db.localDB.Location_DB;
 import com.nextgen.tacky.sensor.gps.OutdoorsCommand;
 import com.nextgen.tacky.sensor.gps.OutdoorsLocationListener;

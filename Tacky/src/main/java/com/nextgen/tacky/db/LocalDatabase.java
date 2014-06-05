@@ -17,6 +17,7 @@ import com.nextgen.tacky.basic.State.State;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.db.localDB.Food_DB;
+import com.nextgen.tacky.db.localDB.Location_DB;
 import com.nextgen.tacky.db.localDB.ReadCommand;
 import com.nextgen.tacky.db.localDB.Room_DB;
 import com.nextgen.tacky.db.localDB.StoreCommand;
@@ -61,6 +62,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         TackyBody_DB.initializeTable(db);
         TackyExpression_DB.initializeTable(db);
         TackyEventHead_DB.initializeTable(db);
+        Location_DB.initializeTable(db);
 
         LocalDatabase.sqLiteDatabase = null;
     }
@@ -77,6 +79,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         TackyBody_DB.dropTable(db, dropTable);
         TackyExpression_DB.dropTable(db, dropTable);
         TackyEventHead_DB.dropTable(db, dropTable);
+        Location_DB.dropTable(db, dropTable);
 
         onCreate(sqLiteDatabase);
         LocalDatabase.sqLiteDatabase = null;
