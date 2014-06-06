@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.location.Location;
 
 import com.nextgen.tacky.activities.rooms.Outdoors;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.basic.TackyLocation;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,7 @@ public class Location_DB {
               new TackyLocation("Castle of Gaasbeek", "gaasbeek_park", Outdoors.OutdoorsType.PARK, 50.799968, 4.201902, 100)
         };
 
-        StoreCommand<TackyLocation> command = new StoreCommand<TackyLocation>() {
+        StoreCommand<TackyLocation, ContentValues> command = new StoreCommand<TackyLocation, ContentValues>() {
             @Override
             public ContentValues storeItem(TackyLocation item) {
                 ContentValues cv = new ContentValues();
@@ -84,7 +85,7 @@ public class Location_DB {
 
         // select all locations with a radius of less than x meter
         String query = String.format(LOCATION_SQL_SELECT_ALL, Integer.toString(RADIUS_SELECT));
-        ArrayList<TackyLocation> tackyLocations = db.readValues(query, new ReadCommand<TackyLocation>() {
+        ArrayList<TackyLocation> tackyLocations = db.readValues(query, new ReadCommand<TackyLocation, Cursor>() {
             @Override
             public TackyLocation readItem(Cursor cursor) {
                 String name = cursor.getString(cursor.getColumnIndex(LOCATION_NAME));

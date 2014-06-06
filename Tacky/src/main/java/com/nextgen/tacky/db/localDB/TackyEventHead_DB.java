@@ -3,10 +3,10 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
 
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 import com.nextgen.tacky.display.TackyHead;
 
 /**
@@ -54,7 +54,7 @@ public class TackyEventHead_DB {
         final Time xmasEnd = new Time(xmasStart);
         xmasEnd.monthDay = 28;
         TackyHead tackyHead = null;
-        db.insertValue(EVENT_HEAD_TABLE, tackyHead, new StoreCommand<TackyHead>() {
+        db.insertValue(EVENT_HEAD_TABLE, tackyHead, new StoreCommand<TackyHead, ContentValues>() {
             @Override
             public ContentValues storeItem(TackyHead item) {
                 ContentValues cv = new ContentValues();
@@ -76,7 +76,7 @@ public class TackyEventHead_DB {
         easterStart.allDay = true;
         final Time easterEnd = new Time(easterStart);
         easterEnd.monthDay = 24;
-        db.insertValue(EVENT_HEAD_TABLE, tackyHead, new StoreCommand<TackyHead>() {
+        db.insertValue(EVENT_HEAD_TABLE, tackyHead, new StoreCommand<TackyHead, ContentValues>() {
             @Override
             public ContentValues storeItem(TackyHead item) {
                 ContentValues cv = new ContentValues();
@@ -99,7 +99,7 @@ public class TackyEventHead_DB {
         now.allDay = true;
         String nowstr = Long.toString(now.toMillis(false));
         String query = String.format(EVENT_HEAD_SQL_SELECT_HEAD, nowstr, nowstr);
-        return db.readValue(query, new ReadCommand<TackyHead>() {
+        return db.readValue(query, new ReadCommand<TackyHead, Cursor>() {
             @Override
             public TackyHead readItem(Cursor cursor) {
                 String bonnet = cursor.getString(cursor.getColumnIndex(EVENT_HEAD_BONNET));

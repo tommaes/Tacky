@@ -3,11 +3,11 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 import com.nextgen.tacky.display.TackyExpression;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class TackyExpression_DB {
             final String sleep = "sleep_normal_" + color;
             final String sleepsmile = "sleep_normal_smile_" + color;
             TackyExpression tackyExpression = null;
-            db.insertValue(EXPRESSION_TABLE, tackyExpression, new StoreCommand<TackyExpression>() {
+            db.insertValue(EXPRESSION_TABLE, tackyExpression, new StoreCommand<TackyExpression, ContentValues>() {
                 @Override
                 public ContentValues storeItem(TackyExpression item) {
                     ContentValues cv = new ContentValues();
@@ -89,7 +89,7 @@ public class TackyExpression_DB {
     }
 
     public ArrayList<TackyExpression> getExpressions() {
-        return db.readValues(EXPRESSION_SQL_SELECT_ALL, new ReadCommand<TackyExpression>() {
+        return db.readValues(EXPRESSION_SQL_SELECT_ALL, new ReadCommand<TackyExpression, Cursor>() {
             @Override
             public TackyExpression readItem(Cursor cursor) {
                 int dbid = cursor.getInt(cursor.getColumnIndex(EXPRESSION_ID));
@@ -108,7 +108,7 @@ public class TackyExpression_DB {
 
     public TackyExpression getExpression(int id)  {
         String query = String.format(EXPRESSION_SQL_SELECT_EXPRESSION, String.valueOf(id));
-        return db.readValue(query, new ReadCommand<TackyExpression>() {
+        return db.readValue(query, new ReadCommand<TackyExpression, Cursor>() {
             @Override
             public TackyExpression readItem(Cursor cursor) {
                 int id = cursor.getInt(cursor.getColumnIndex(EXPRESSION_ID));

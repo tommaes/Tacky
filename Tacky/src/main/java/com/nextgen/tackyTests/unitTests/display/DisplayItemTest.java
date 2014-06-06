@@ -21,7 +21,7 @@ public class DisplayItemTest extends TestCase {
         assertEquals(name, displayItem.getName());
 
         // test empty bitmap
-        assertTrue(displayItem.hasBitmap());
+        assertFalse(displayItem.hasBitmap());
     }
 
     public void testParcel() throws Exception {

@@ -3,14 +3,14 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.State.State;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 import com.nextgen.tacky.display.TackyBody;
 import com.nextgen.tacky.display.TackyExpression;
 import com.nextgen.tacky.display.TackyHead;
@@ -82,7 +82,7 @@ public class Tacky_DB {
     }
 
     public ArrayList<String> getTackyNames() {
-        return db.readValues(SELECT_TACKY_NAMES, new ReadCommand<String>() {
+        return db.readValues(SELECT_TACKY_NAMES, new ReadCommand<String, Cursor>() {
             @Override
             public String readItem(Cursor cursor) {
                 return cursor.getString(0);
@@ -97,7 +97,7 @@ public class Tacky_DB {
 
     public Tacky getTacky(String name) {
         String query = String.format(TACKY_SQL_READ_TACKY, name);
-        return db.readValue(query, new ReadCommand<Tacky>() {
+        return db.readValue(query, new ReadCommand<Tacky, Cursor>() {
             @Override
             public Tacky readItem(Cursor cursor) {
                 String name = cursor.getString(cursor.getColumnIndex(TACKY_NAME));
@@ -132,7 +132,7 @@ public class Tacky_DB {
     }
 
     private void storeTacky(Tacky t, final TackyHead head, final TackyBody body, final TackyExpression exp) {
-        db.replaceValue(TACKY_TABLE, t, new StoreCommand<Tacky>() {
+        db.replaceValue(TACKY_TABLE, t, new StoreCommand<Tacky, ContentValues>() {
             @Override
             public ContentValues storeItem(Tacky item) {
                 ContentValues cv = new ContentValues();
@@ -155,7 +155,7 @@ public class Tacky_DB {
     }
 
     public void updateTacky(Tacky t) {
-        db.updateValue(TACKY_TABLE, TACKY_NAME + "=?", new String[]{t.getName()}, t, new StoreCommand<Tacky>() {
+        db.updateValue(TACKY_TABLE, TACKY_NAME + "=?", new String[]{t.getName()}, t, new StoreCommand<Tacky, ContentValues>() {
 
             @Override
             public ContentValues storeItem(Tacky item) {
@@ -174,7 +174,7 @@ public class Tacky_DB {
     }
 
     public void updateTackyWithoutRoom(Tacky t) {
-        db.updateValue(TACKY_TABLE, TACKY_NAME + "=?", new String[]{t.getName()}, t, new StoreCommand<Tacky>() {
+        db.updateValue(TACKY_TABLE, TACKY_NAME + "=?", new String[]{t.getName()}, t, new StoreCommand<Tacky, ContentValues>() {
 
             @Override
             public ContentValues storeItem(Tacky item) {

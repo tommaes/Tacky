@@ -3,11 +3,11 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 import com.nextgen.tacky.display.TackyBody;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class TackyBody_DB {
         for (String color : colors) {
             final String visual = "body_" + color;
             TackyBody tackyHead = null;
-            db.insertValue(BODY_TABLE, tackyHead, new StoreCommand<TackyBody>() {
+            db.insertValue(BODY_TABLE, tackyHead, new StoreCommand<TackyBody, ContentValues>() {
                 @Override
                 public ContentValues storeItem(TackyBody item) {
                     ContentValues cv = new ContentValues();
@@ -59,7 +59,7 @@ public class TackyBody_DB {
     }
 
     public ArrayList<TackyBody> getBodies() {
-        return db.readValues(BODY_SQL_SELECT_ALL, new ReadCommand<TackyBody>() {
+        return db.readValues(BODY_SQL_SELECT_ALL, new ReadCommand<TackyBody, Cursor>() {
             @Override
             public TackyBody readItem(Cursor cursor) {
                 int id = cursor.getInt(cursor.getColumnIndex(BODY_ID));
@@ -72,7 +72,7 @@ public class TackyBody_DB {
 
     public TackyBody getBody(int id)  {
         String query = String.format(BODY_SQL_SELECT_BODY, String.valueOf(id));
-        return db.readValue(query, new ReadCommand<TackyBody>() {
+        return db.readValue(query, new ReadCommand<TackyBody, Cursor>() {
             @Override
             public TackyBody readItem(Cursor cursor) {
                 int id = cursor.getInt(cursor.getColumnIndex(BODY_ID));

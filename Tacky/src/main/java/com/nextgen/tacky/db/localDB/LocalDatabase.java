@@ -1,38 +1,15 @@
-package com.nextgen.tacky.db;
+package com.nextgen.tacky.db.localDB;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.text.format.Time;
 
-import com.nextgen.tacky.activities.rooms.Outdoors;
-import com.nextgen.tacky.basic.Room;
-import com.nextgen.tacky.basic.State.MoodState;
-import com.nextgen.tacky.basic.State.State;
-import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.basic.tacky.TackyState;
-import com.nextgen.tacky.db.localDB.Food_DB;
-import com.nextgen.tacky.db.localDB.Location_DB;
-import com.nextgen.tacky.db.localDB.ReadCommand;
-import com.nextgen.tacky.db.localDB.Room_DB;
-import com.nextgen.tacky.db.localDB.StoreCommand;
-import com.nextgen.tacky.db.localDB.TackyBody_DB;
-import com.nextgen.tacky.db.localDB.TackyEventHead_DB;
-import com.nextgen.tacky.db.localDB.TackyExpression_DB;
-import com.nextgen.tacky.db.localDB.TackyHead_DB;
-import com.nextgen.tacky.db.localDB.Tacky_DB;
-import com.nextgen.tacky.display.TackyBody;
-import com.nextgen.tacky.display.TackyDisplayObject;
-import com.nextgen.tacky.display.TackyExpression;
-import com.nextgen.tacky.display.TackyHead;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Bram on 31/10/13.
@@ -108,7 +85,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         sqlDB.close();
     }
 
-    public <T> void insertValue(String tableName, T value, StoreCommand<T> storeCommand){
+    public <T> void insertValue(String tableName, T value, StoreCommand<T, ContentValues> storeCommand){
         if(sqLiteDatabase == null) {
             SQLiteDatabase sqlDB = db.getWritableDatabase();
             ContentValues cv = storeCommand.storeItem(value);
@@ -122,7 +99,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         }
     }
 
-    public <T> T readValue(String query, ReadCommand<T> readCommand){
+    public <T> T readValue(String query, ReadCommand<T, Cursor> readCommand){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cur = db.rawQuery(query, null);
         cur.moveToFirst();
@@ -137,7 +114,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return result;
     }
 
-    public <T> ArrayList<T> readValues(String query, ReadCommand<T> readCommand){
+    public <T> ArrayList<T> readValues(String query, ReadCommand<T, Cursor> readCommand){
         SQLiteDatabase sqlDB = db.getReadableDatabase();
         Cursor cur = sqlDB.rawQuery(query, null);
         cur.moveToFirst();
@@ -153,7 +130,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return result;
     }
 
-    public <T> void replaceValue(String tableName, T value, StoreCommand<T> storeCommand){
+    public <T> void replaceValue(String tableName, T value, StoreCommand<T, ContentValues> storeCommand){
         SQLiteDatabase sqlDB = db.getWritableDatabase();
         ContentValues cv = storeCommand.storeItem(value);
 
@@ -162,7 +139,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         sqlDB.close();
     }
 
-    public <T> void updateValue(String tableName, String whereClause, String[] whereArgs, T value, StoreCommand<T> storeCommand){
+    public <T> void updateValue(String tableName, String whereClause, String[] whereArgs, T value, StoreCommand<T, ContentValues> storeCommand){
         SQLiteDatabase sqlDB = db.getWritableDatabase();
         ContentValues cv = storeCommand.storeItem(value);
 

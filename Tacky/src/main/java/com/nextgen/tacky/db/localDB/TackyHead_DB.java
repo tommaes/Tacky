@@ -3,11 +3,11 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 import com.nextgen.tacky.display.TackyHead;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class TackyHead_DB {
             final String up = "head_up_" + color;
             final String down = "head_down_" + color;
             TackyHead tackyHead = new TackyHead(normal, bonnet, up, down, 0);
-            db.insertValue(HEAD_TABLE, tackyHead, new StoreCommand<TackyHead>() {
+            db.insertValue(HEAD_TABLE, tackyHead, new StoreCommand<TackyHead, ContentValues>() {
                 @Override
                 public ContentValues storeItem(TackyHead item) {
                     ContentValues cv = new ContentValues();
@@ -74,7 +74,7 @@ public class TackyHead_DB {
     }
 
     public ArrayList<TackyHead> getHeads() {
-        return db.readValues(HEAD_SQL_SELECT_ALL, new ReadCommand<TackyHead>() {
+        return db.readValues(HEAD_SQL_SELECT_ALL, new ReadCommand<TackyHead, Cursor>() {
             @Override
             public TackyHead readItem(Cursor cursor) {
                 int id = cursor.getInt(cursor.getColumnIndex(HEAD_ID));
@@ -90,7 +90,7 @@ public class TackyHead_DB {
 
     public TackyHead getHead(int id)  {
         String query = String.format(HEAD_SQL_SELECT_HEAD, String.valueOf(id));
-        return db.readValue(query, new ReadCommand<TackyHead>() {
+        return db.readValue(query, new ReadCommand<TackyHead, Cursor>() {
             @Override
             public TackyHead readItem(Cursor cursor) {
                 int id = cursor.getInt(cursor.getColumnIndex(HEAD_ID));

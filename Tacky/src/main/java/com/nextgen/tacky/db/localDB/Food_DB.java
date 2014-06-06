@@ -3,10 +3,10 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.nextgen.tacky.basic.Food;
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class Food_DB {
         Food f2 = new Food("Orange juice", "orangejuice", 5, -1);
         Food f3 = new Food("Yoghurt", "yoghurt", 3, -1);
 
-        StoreCommand<Food> command = new StoreCommand<Food>() {
+        StoreCommand<Food, ContentValues> command = new StoreCommand<Food, ContentValues>() {
             @Override
             public ContentValues storeItem(Food item) {
                 ContentValues cv = new ContentValues();
@@ -63,7 +63,7 @@ public class Food_DB {
     }
 
     public ArrayList<Food> getFoods() {
-        return db.readValues(FOOD_SQL_SELECT_ALL, new ReadCommand<Food>(){
+        return db.readValues(FOOD_SQL_SELECT_ALL, new ReadCommand<Food, Cursor>(){
             @Override
             public Food readItem(Cursor cursor) {
                 String name = cursor.getString(cursor.getColumnIndex(FOOD_NAME));
@@ -78,7 +78,7 @@ public class Food_DB {
 
 
     public void storeFood(Food f) {
-        db.replaceValue(FOOD_TABLE, f, new StoreCommand<Food>() {
+        db.replaceValue(FOOD_TABLE, f, new StoreCommand<Food, ContentValues>() {
             @Override
             public ContentValues storeItem(Food item) {
                 ContentValues cv = new ContentValues();

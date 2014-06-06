@@ -30,7 +30,6 @@ import com.nextgen.tacky.activities.MainTackySurface;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.db.localDB.Food_DB;
 import com.nextgen.tacky.db.localDB.Room_DB;
 import com.nextgen.tacky.db.localDB.Tacky_DB;

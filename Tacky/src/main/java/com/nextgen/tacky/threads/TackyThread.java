@@ -1,7 +1,6 @@
 package com.nextgen.tacky.threads;
 
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.db.localDB.Tacky_DB;
 
 /**

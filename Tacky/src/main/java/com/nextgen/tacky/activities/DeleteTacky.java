@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nextgen.tacky.R;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.db.localDB.Room_DB;
 import com.nextgen.tacky.db.localDB.Tacky_DB;
 

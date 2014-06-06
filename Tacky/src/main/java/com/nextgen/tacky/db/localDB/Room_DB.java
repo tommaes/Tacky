@@ -3,14 +3,13 @@ package com.nextgen.tacky.db.localDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.LocalDatabase;
+import com.nextgen.tacky.db.generic.ReadCommand;
+import com.nextgen.tacky.db.generic.StoreCommand;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by maes on 21/05/14.
@@ -71,7 +70,7 @@ public class Room_DB {
 
     public Room getRoom(String name, String owner) {
         String query = String.format(ROOM_SQL_SELECT_ROOM, name, owner);
-        return db.readValue(query, new ReadCommand<Room>() {
+        return db.readValue(query, new ReadCommand<Room, Cursor>() {
             @Override
             public Room readItem(Cursor cursor) {
                 String name = cursor.getString(cursor.getColumnIndex(ROOM_NAME));
@@ -84,7 +83,7 @@ public class Room_DB {
 
     public ArrayList<Room> getRooms(Tacky owner){
         String query = String.format(ROOM_SQL_SELECT_ALL, owner.getName());
-        return db.readValues(query, new ReadCommand<Room>() {
+        return db.readValues(query, new ReadCommand<Room, Cursor>() {
             @Override
             public Room readItem(Cursor cursor) {
                 String name = cursor.getString(cursor.getColumnIndex(ROOM_NAME));
@@ -112,7 +111,7 @@ public class Room_DB {
     }
 
     public void storeRoom(final Tacky owner){
-        db.replaceValue(ROOM_TABLE, null, new StoreCommand<Object>() {
+        db.replaceValue(ROOM_TABLE, null, new StoreCommand<Object, ContentValues>() {
             @Override
             public ContentValues storeItem(Object item) {
                 ContentValues cv = new ContentValues();
@@ -127,7 +126,7 @@ public class Room_DB {
     }
 
     public void storeRoom(final Room r, final Tacky owner) {
-        db.replaceValue(ROOM_TABLE, null, new StoreCommand<Object>() {
+        db.replaceValue(ROOM_TABLE, null, new StoreCommand<Object, ContentValues>() {
             @Override
             public ContentValues storeItem(Object item) {
                 ContentValues cv = new ContentValues();

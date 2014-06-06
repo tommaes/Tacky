@@ -1,11 +1,8 @@
 package com.nextgen.tacky.db.localDB;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.display.TackyBody;
 import com.nextgen.tacky.display.TackyDisplayObject;
 import com.nextgen.tacky.display.TackyExpression;

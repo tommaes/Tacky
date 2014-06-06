@@ -5,8 +5,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.nextgen.tacky.basic.State.MoodState;
-import com.nextgen.tacky.basic.tacky.TackyState;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.db.localDB.TackyExpression_DB;
 
 /**
