@@ -74,9 +74,11 @@ public class MainTackySurface extends SurfaceView implements SurfaceHolder.Callb
         });
         if(surfaceHolder.getSurface().isValid()){
             Canvas canvas = surfaceHolder.lockCanvas();
-            canvas.restore();
-            tackyDisplay.display(canvas);
-            surfaceHolder.unlockCanvasAndPost(canvas);
+            if (canvas != null) {
+                canvas.restore();
+                tackyDisplay.display(canvas);
+                surfaceHolder.unlockCanvasAndPost(canvas);
+            }
         }
     }
 

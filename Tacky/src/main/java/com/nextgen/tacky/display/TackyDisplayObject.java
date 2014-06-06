@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.TackyState;
-import com.nextgen.tacky.db.LocalDatabase;
 import com.nextgen.tacky.db.localDB.TackyDisplayObject_DB;
 
 /**
@@ -70,12 +69,12 @@ public class TackyDisplayObject implements Parcelable {
         return body.getSide(db.getTackyBody_db());
     }
 
-    public Bitmap getExpressionFront(TackyDisplayObject_DB db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue) {
-        return expression.getFront(db.getTackyExpression_db(), tackyStatus, moodValue);
+    public Bitmap getExpressionFront(TackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
+        return expression.getFront(db.getTackyExpression_db(), moodValue);
     }
 
-    public Bitmap getExpressionSide(TackyDisplayObject_DB db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue) {
-        return expression.getSide(db.getTackyExpression_db(), tackyStatus, moodValue);
+    public Bitmap getExpressionSide(TackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
+        return expression.getSide(db.getTackyExpression_db(), moodValue);
     }
 
     public Bitmap getExpressionSleep(TackyDisplayObject_DB db) {

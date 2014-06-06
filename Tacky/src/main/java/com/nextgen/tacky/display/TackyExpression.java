@@ -45,55 +45,39 @@ public class TackyExpression implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(TackyExpression_DB db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
+    public Bitmap getFront(TackyExpression_DB db, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
-        switch (tackyStatus) {
-            case SLEEPING: {
-                displayItem = getSleep(db);
+        switch (moodValue) {
+            case HAPPY: {
+                displayItem = getFrontHappy(db);
                 break;
             }
-            default: {
-                switch (moodValue) {
-                    case HAPPY: {
-                        displayItem = getFrontHappy(db);
-                        break;
-                    }
-                    case NORMAL: {
-                        displayItem = getFrontNormal(db);
-                        break;
-                    }
-                    case SAD: {
-                        displayItem = getFrontSad(db);
-                        break;
-                    }
-                }
+            case NORMAL: {
+                displayItem = getFrontNormal(db);
+                break;
+            }
+            case SAD: {
+                displayItem = getFrontSad(db);
+                break;
             }
         }
         return displayItem;
     }
 
-    public Bitmap getSide(TackyExpression_DB db, TackyState.TackyStatus tackyStatus, MoodState.MoodValue moodValue){
+    public Bitmap getSide(TackyExpression_DB db, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
-        switch (tackyStatus) {
-            case SLEEPING: {
-                displayItem = getSleep(db);
+        switch (moodValue) {
+            case HAPPY: {
+                displayItem = getSideHappy(db);
                 break;
             }
-            default: {
-                switch (moodValue) {
-                    case HAPPY: {
-                        displayItem = getSideHappy(db);
-                        break;
-                    }
-                    case NORMAL: {
-                        displayItem = getSideNormal(db);
-                        break;
-                    }
-                    case SAD: {
-                        displayItem = getSideSad(db);
-                        break;
-                    }
-                }
+            case NORMAL: {
+                displayItem = getSideNormal(db);
+                break;
+            }
+            case SAD: {
+                displayItem = getSideSad(db);
+                break;
             }
         }
         return displayItem;
