@@ -153,8 +153,8 @@ public class TackyExpression implements Parcelable {
         dest.writeParcelable(sleep, flags);
         dest.writeInt(databaseId);
     }
-    public final static String TACKYEXPRESSION = "com.nextgen.tacky.display.TackyHead";
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+    public static final TackyExpression.Creator<TackyExpression> CREATOR = new TackyExpression.Creator<TackyExpression>() {
         @Override
         public TackyExpression createFromParcel(Parcel source) {
             return new TackyExpression(source);

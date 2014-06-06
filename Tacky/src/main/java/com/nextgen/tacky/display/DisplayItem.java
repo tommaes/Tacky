@@ -40,8 +40,9 @@ public class DisplayItem implements Parcelable {
         dest.writeString(name);
         // bitmap not included in Parcel, can be reloaded
     }
-    public final static String DISPLAYITEM = "com.nextgen.tacky.display.DisplayItem";
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+
+    public static final DisplayItem.Creator<DisplayItem> CREATOR = new DisplayItem.Creator<DisplayItem>(){
         @Override
         public DisplayItem createFromParcel(Parcel source) {
             String name = source.readString();

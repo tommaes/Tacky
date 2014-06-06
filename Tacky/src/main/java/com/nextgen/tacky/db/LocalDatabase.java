@@ -40,7 +40,7 @@ import java.util.List;
 public class LocalDatabase extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "tackyDB";
-    private static final int DB_VERSION = 15;
+    private static final int DB_VERSION = 16;
     private static LocalDatabase db = null;
 
     private static SQLiteDatabase sqLiteDatabase = null;

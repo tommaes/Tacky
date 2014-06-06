@@ -65,8 +65,8 @@ public class TackyBody implements Parcelable {
         dest.writeParcelable(body, flags);
         dest.writeInt(databaseId);
     }
-    public final static String TACKYEXPRESSION = "com.nextgen.tacky.display.TackyBody";
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+    public static final TackyBody.Creator<TackyBody> CREATOR = new TackyBody.Creator<TackyBody>() {
         @Override
         public TackyBody createFromParcel(Parcel source) {
             return new TackyBody(source);

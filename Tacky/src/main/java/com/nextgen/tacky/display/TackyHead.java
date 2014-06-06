@@ -82,8 +82,8 @@ public class TackyHead implements Parcelable {
         dest.writeParcelable(down, flags);
         dest.writeInt(databaseId);
     }
-    public final static String TACKYHEAD = "com.nextgen.tacky.display.TackyHead";
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+    public static final TackyHead.Creator<TackyHead> CREATOR = new TackyHead.Creator<TackyHead>() {
         @Override
         public TackyHead createFromParcel(Parcel source) {
             return new TackyHead(source);

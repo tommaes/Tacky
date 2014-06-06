@@ -93,7 +93,7 @@ public class TackyDisplayObject implements Parcelable {
         dest.writeParcelable(body, flags);
         dest.writeParcelable(expression, flags);
     }
-    public final static String TACKYDISPLAYOBJECT = "com.nextgen.tacky.display.TackyDisplayObject";
+
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         @Override
         public TackyDisplayObject createFromParcel(Parcel source) {
