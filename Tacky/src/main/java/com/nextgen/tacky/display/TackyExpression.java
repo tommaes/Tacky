@@ -12,107 +12,35 @@ import com.nextgen.tacky.db.localDB.TackyExpression_DB;
  */
 public class TackyExpression implements Parcelable {
 
-    private DisplayItem frontHappy;
-    private DisplayItem frontNormal;
-    private DisplayItem frontSad;
-    private DisplayItem sideHappy;
-    private DisplayItem sideNormal;
-    private DisplayItem sideSad;
-    private DisplayItem sleep;
+    private Expression front;
+    private Expression side;
+    private Expression sleep;
     private int databaseId;
 
-    public TackyExpression(String frontHappy, String frontNormal, String frontSad, String sideHappy, String sideNormal, String sideSad, String sleep, int databaseId) {
-        this.frontHappy = new DisplayItem(frontHappy);
-        this.frontNormal = new DisplayItem(frontNormal);
-        this.frontSad = new DisplayItem(frontSad);
-        this.sideHappy = new DisplayItem(sideHappy);
-        this.sideNormal = new DisplayItem(sideNormal);
-        this.sideSad = new DisplayItem(sideSad);
-        this.sleep = new DisplayItem(sleep);
+    public TackyExpression(Expression front, Expression side, Expression sleep, int databaseId) {
+        this.front = front;
+        this.side = side;
+        this.sleep = sleep;
         this.databaseId = databaseId;
     }
 
     private TackyExpression(Parcel p) {
-        this.frontHappy = p.readParcelable(DisplayItem.class.getClassLoader());
-        this.frontNormal = p.readParcelable(DisplayItem.class.getClassLoader());
-        this.frontSad = p.readParcelable(DisplayItem.class.getClassLoader());
-        this.sideHappy = p.readParcelable(DisplayItem.class.getClassLoader());
-        this.sideNormal = p.readParcelable(DisplayItem.class.getClassLoader());
-        this.sideSad = p.readParcelable(DisplayItem.class.getClassLoader());
-        this.sleep = p.readParcelable(DisplayItem.class.getClassLoader());
+        this.front = p.readParcelable(Expression.class.getClassLoader());
+        this.side = p.readParcelable(Expression.class.getClassLoader());
+        this.sleep = p.readParcelable(Expression.class.getClassLoader());
         this.databaseId = p.readInt();
     }
 
     public Bitmap getFront(TackyExpression_DB db, MoodState.MoodValue moodValue){
-        Bitmap displayItem = null;
-        switch (moodValue) {
-            case HAPPY: {
-                displayItem = getFrontHappy(db);
-                break;
-            }
-            case NORMAL: {
-                displayItem = getFrontNormal(db);
-                break;
-            }
-            case SAD: {
-                displayItem = getFrontSad(db);
-                break;
-            }
-        }
-        return displayItem;
+        return front.getExpression(db, moodValue);
     }
 
     public Bitmap getSide(TackyExpression_DB db, MoodState.MoodValue moodValue){
-        Bitmap displayItem = null;
-        switch (moodValue) {
-            case HAPPY: {
-                displayItem = getSideHappy(db);
-                break;
-            }
-            case NORMAL: {
-                displayItem = getSideNormal(db);
-                break;
-            }
-            case SAD: {
-                displayItem = getSideSad(db);
-                break;
-            }
-        }
-        return displayItem;
-    }
-
-    private Bitmap getFrontHappy(TackyExpression_DB db) {
-        return getBitmap(db, frontHappy);
-    }
-
-    private Bitmap getFrontNormal(TackyExpression_DB db) {
-        return getBitmap(db, frontNormal);
-    }
-
-    private Bitmap getFrontSad(TackyExpression_DB db) {
-        return getBitmap(db, frontSad);
-    }
-
-    private Bitmap getSideHappy(TackyExpression_DB db) {
-        return getBitmap(db, sideHappy);
-    }
-
-    private Bitmap getSideNormal(TackyExpression_DB db) {
-        return getBitmap(db, sideNormal);
-    }
-
-    private Bitmap getSideSad(TackyExpression_DB db) {
-        return getBitmap(db, sideSad);
+        return side.getExpression(db, moodValue);
     }
 
     public Bitmap getSleep(TackyExpression_DB db) {
-        return getBitmap(db, sleep);
-    }
-
-    private Bitmap getBitmap(TackyExpression_DB db, DisplayItem displayItem) {
-        if (!displayItem.hasBitmap())
-            displayItem.setBitmap(db.decodeImage(displayItem.getName()));
-        return displayItem.getBitmap();
+        return sleep.getExpression(db, null);
     }
 
     public int getDatabaseId() {
@@ -126,12 +54,8 @@ public class TackyExpression implements Parcelable {
     }
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(frontHappy, flags);
-        dest.writeParcelable(frontNormal, flags);
-        dest.writeParcelable(frontSad, flags);
-        dest.writeParcelable(sideHappy, flags);
-        dest.writeParcelable(sideNormal, flags);
-        dest.writeParcelable(sideSad, flags);
+        dest.writeParcelable(front, flags);
+        dest.writeParcelable(side, flags);
         dest.writeParcelable(sleep, flags);
         dest.writeInt(databaseId);
     }

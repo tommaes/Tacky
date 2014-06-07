@@ -46,8 +46,7 @@ public class TackyBody_DB {
         db.addTable(BODY_SQL_CREATE);
         for (String color : colors) {
             final String visual = "body_" + color;
-            TackyBody tackyHead = null;
-            db.insertValue(BODY_TABLE, tackyHead, new StoreCommand<TackyBody, ContentValues>() {
+            db.insertValue(BODY_TABLE, null, new StoreCommand<TackyBody, ContentValues>() {
                 @Override
                 public ContentValues storeItem(TackyBody item) {
                     ContentValues cv = new ContentValues();

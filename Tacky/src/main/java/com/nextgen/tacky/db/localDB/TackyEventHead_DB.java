@@ -53,8 +53,7 @@ public class TackyEventHead_DB {
         xmasStart.allDay = true;
         final Time xmasEnd = new Time(xmasStart);
         xmasEnd.monthDay = 28;
-        TackyHead tackyHead = null;
-        db.insertValue(EVENT_HEAD_TABLE, tackyHead, new StoreCommand<TackyHead, ContentValues>() {
+        db.insertValue(EVENT_HEAD_TABLE, null, new StoreCommand<TackyHead, ContentValues>() {
             @Override
             public ContentValues storeItem(TackyHead item) {
                 ContentValues cv = new ContentValues();
@@ -76,7 +75,7 @@ public class TackyEventHead_DB {
         easterStart.allDay = true;
         final Time easterEnd = new Time(easterStart);
         easterEnd.monthDay = 24;
-        db.insertValue(EVENT_HEAD_TABLE, tackyHead, new StoreCommand<TackyHead, ContentValues>() {
+        db.insertValue(EVENT_HEAD_TABLE, null, new StoreCommand<TackyHead, ContentValues>() {
             @Override
             public ContentValues storeItem(TackyHead item) {
                 ContentValues cv = new ContentValues();

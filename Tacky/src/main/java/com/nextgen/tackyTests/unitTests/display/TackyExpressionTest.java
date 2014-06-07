@@ -2,6 +2,7 @@ package com.nextgen.tackyTests.unitTests.display;
 
 import android.os.Parcel;
 
+import com.nextgen.tacky.display.Expression;
 import com.nextgen.tacky.display.TackyExpression;
 
 import junit.framework.TestCase;
@@ -11,18 +12,15 @@ import junit.framework.TestCase;
  */
 public class TackyExpressionTest extends TestCase {
 
-    private String frontHappy = "frontHappy";
-    private String frontNormal = "frontNormal";
-    private String frontSad = "frontSad";
-    private String sideHappy = "sideHappy";
-    private String sideNormal = "sideNormal";
-    private String sideSad = "sideSad";
-    private String sleep = "sleep";
     private int id = 10;
+
+    Expression front = new Expression("frontHappy", "frontNormal", "frontSad");
+    Expression side = new Expression("sideHappy", "sideNormal", "sideSad");
+    Expression sleep = new Expression("sleep");
 
     public void testConstructor() throws Exception {
 
-        TackyExpression tackyExpression = new TackyExpression(frontHappy, frontNormal, frontSad, sideHappy, sideNormal, sideSad, sleep, id);
+        TackyExpression tackyExpression = new TackyExpression(front, side, sleep, id);
 
         // test ID getter
         assertEquals(id, tackyExpression.getDatabaseId());
@@ -32,7 +30,7 @@ public class TackyExpressionTest extends TestCase {
     public void testParcel() throws Exception {
 
         Parcel parcel = Parcel.obtain();
-        TackyExpression tackyExpression = new TackyExpression(frontHappy, frontNormal, frontSad, sideHappy, sideNormal, sideSad, sleep, id);
+        TackyExpression tackyExpression = new TackyExpression(front, side, sleep, id);
         tackyExpression.writeToParcel(parcel, 0);
         parcel.setDataPosition(0);
         TackyExpression parcelTackyExpression = TackyExpression.CREATOR.createFromParcel(parcel);

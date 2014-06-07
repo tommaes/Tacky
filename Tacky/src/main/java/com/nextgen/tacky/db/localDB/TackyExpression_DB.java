@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 
 import com.nextgen.tacky.db.generic.ReadCommand;
 import com.nextgen.tacky.db.generic.StoreCommand;
+import com.nextgen.tacky.display.Expression;
 import com.nextgen.tacky.display.TackyExpression;
 
 import java.util.ArrayList;
@@ -68,8 +69,7 @@ public class TackyExpression_DB {
             final String sunhappy = "side_unhappy_" + color;
             final String sleep = "sleep_normal_" + color;
             final String sleepsmile = "sleep_normal_smile_" + color;
-            TackyExpression tackyExpression = null;
-            db.insertValue(EXPRESSION_TABLE, tackyExpression, new StoreCommand<TackyExpression, ContentValues>() {
+            db.insertValue(EXPRESSION_TABLE, null, new StoreCommand<TackyExpression, ContentValues>() {
                 @Override
                 public ContentValues storeItem(TackyExpression item) {
                     ContentValues cv = new ContentValues();
@@ -92,7 +92,7 @@ public class TackyExpression_DB {
         return db.readValues(EXPRESSION_SQL_SELECT_ALL, new ReadCommand<TackyExpression, Cursor>() {
             @Override
             public TackyExpression readItem(Cursor cursor) {
-                int dbid = cursor.getInt(cursor.getColumnIndex(EXPRESSION_ID));
+                int id = cursor.getInt(cursor.getColumnIndex(EXPRESSION_ID));
                 String frontHappy = cursor.getString(cursor.getColumnIndex(EXPRESSION_FRONT_HAPPY));
                 String frontNormal = cursor.getString(cursor.getColumnIndex(EXPRESSION_FRONT_NORMAL));
                 String frontSad = cursor.getString(cursor.getColumnIndex(EXPRESSION_FRONT_UNHAPPY));
@@ -101,7 +101,11 @@ public class TackyExpression_DB {
                 String sideSad = cursor.getString(cursor.getColumnIndex(EXPRESSION_SIDE_UNHAPPY));
                 String sleep = cursor.getString(cursor.getColumnIndex(EXPRESSION_SLEEP));
 
-                return new TackyExpression(frontHappy, frontNormal, frontSad, sideHappy, sideNormal, sideSad, sleep, dbid);
+                Expression front = new Expression(frontHappy, frontNormal, frontSad);
+                Expression side = new Expression(sideHappy, sideNormal, sideSad);
+                Expression sleepExpression = new Expression(sleep);
+
+                return new TackyExpression(front, side, sleepExpression, id);
             }
         });
     }
@@ -119,7 +123,12 @@ public class TackyExpression_DB {
                 String sideNormal = cursor.getString(cursor.getColumnIndex(EXPRESSION_SIDE_NORMAL));
                 String sideSad = cursor.getString(cursor.getColumnIndex(EXPRESSION_SIDE_UNHAPPY));
                 String sleep = cursor.getString(cursor.getColumnIndex(EXPRESSION_SLEEP));
-                return new TackyExpression(frontHappy, frontNormal, frontSad, sideHappy, sideNormal, sideSad, sleep, id);
+
+                Expression front = new Expression(frontHappy, frontNormal, frontSad);
+                Expression side = new Expression(sideHappy, sideNormal, sideSad);
+                Expression sleepExpression = new Expression(sleep);
+
+                return new TackyExpression(front, side, sleepExpression, id);
             }
         });
     }

@@ -29,7 +29,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        //db.execSQL(LOCATION_SQL_CREATE);
         LocalDatabase.sqLiteDatabase = sqLiteDatabase;
 
         Food_DB.initializeTable(db);
@@ -81,6 +80,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
     public void deleteValue(String tableName, String whereClause, String[] whereArgs){
         SQLiteDatabase sqlDB = db.getWritableDatabase();
+        assert sqlDB != null;
         sqlDB.delete(tableName, whereClause, whereArgs);
         sqlDB.close();
     }
@@ -90,6 +90,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
             SQLiteDatabase sqlDB = db.getWritableDatabase();
             ContentValues cv = storeCommand.storeItem(value);
 
+            assert sqlDB != null;
             sqlDB.insert(tableName, null, cv);
             sqlDB.close();
         }
@@ -101,6 +102,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
     public <T> T readValue(String query, ReadCommand<T, Cursor> readCommand){
         SQLiteDatabase db = this.getReadableDatabase();
+        assert db != null;
         Cursor cur = db.rawQuery(query, null);
         cur.moveToFirst();
         T result = null;
@@ -116,6 +118,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
     public <T> ArrayList<T> readValues(String query, ReadCommand<T, Cursor> readCommand){
         SQLiteDatabase sqlDB = db.getReadableDatabase();
+        assert sqlDB != null;
         Cursor cur = sqlDB.rawQuery(query, null);
         cur.moveToFirst();
 
@@ -134,6 +137,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         SQLiteDatabase sqlDB = db.getWritableDatabase();
         ContentValues cv = storeCommand.storeItem(value);
 
+        assert sqlDB != null;
         sqlDB.replace(tableName, null, cv); // replace entry if one already exists
 
         sqlDB.close();
@@ -143,6 +147,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         SQLiteDatabase sqlDB = db.getWritableDatabase();
         ContentValues cv = storeCommand.storeItem(value);
 
+        assert sqlDB != null;
         sqlDB.update(tableName, cv, whereClause, whereArgs);
         sqlDB.close();
     }
