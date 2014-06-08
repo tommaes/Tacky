@@ -34,6 +34,7 @@ public class TackyHeadTest extends TestCase {
         parcel.setDataPosition(0);
         TackyHead parcelTackyHead = TackyHead.CREATOR.createFromParcel(parcel);
 
+        assert parcelTackyHead != null;
         assertEquals(id, parcelTackyHead.getDatabaseId());
     }
 }

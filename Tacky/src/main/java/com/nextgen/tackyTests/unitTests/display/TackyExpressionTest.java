@@ -35,6 +35,7 @@ public class TackyExpressionTest extends TestCase {
         parcel.setDataPosition(0);
         TackyExpression parcelTackyExpression = TackyExpression.CREATOR.createFromParcel(parcel);
 
+        assert parcelTackyExpression != null;
         assertEquals(id, parcelTackyExpression.getDatabaseId());
     }
 }

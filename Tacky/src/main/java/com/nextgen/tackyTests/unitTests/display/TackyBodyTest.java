@@ -31,6 +31,7 @@ public class TackyBodyTest extends TestCase{
         parcel.setDataPosition(0);
         TackyBody parcelTackyBody = TackyBody.CREATOR.createFromParcel(parcel);
 
+        assert parcelTackyBody != null;
         assertEquals(id, parcelTackyBody.getDatabaseId());
     }
 

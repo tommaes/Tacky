@@ -32,6 +32,7 @@ public class DisplayItemTest extends TestCase {
         parcel.setDataPosition(0);
         DisplayItem parcelDisplayItem = DisplayItem.CREATOR.createFromParcel(parcel);
 
+        assert parcelDisplayItem != null;
         assertEquals(name, parcelDisplayItem.getName());
     }
 
