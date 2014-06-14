@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 29/05/14.
  */
-public class TackyExpression_DB {
+public class LocalTackyExpression_DB {
 
     private static LocalDatabase db = null;
     private Context context;
@@ -51,7 +51,7 @@ public class TackyExpression_DB {
     private static final String EXPRESSION_SQL_SELECT_EXPRESSION = "SELECT * FROM " + EXPRESSION_TABLE +
                                                                    " WHERE " + EXPRESSION_ID + " = '%s'";
 
-    public TackyExpression_DB(Context ctx){
+    public LocalTackyExpression_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
         context = ctx;

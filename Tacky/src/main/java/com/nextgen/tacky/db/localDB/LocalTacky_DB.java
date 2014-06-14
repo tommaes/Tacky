@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 22/05/14.
  */
-public class Tacky_DB {
+public class LocalTacky_DB {
 
     private static LocalDatabase db = null;
 
@@ -60,7 +60,7 @@ public class Tacky_DB {
             TACKY_HEAD + " REAL," +
             TACKY_BODY + " REAL," +
             TACKY_EXPRESSION + " REAL," +
-            "FOREIGN KEY(" + TACKY_CURRENTROOM + ") REFERENCES " + Room_DB.ROOM_TABLE + "(" + Room_DB.ROOM_NAME + ")," +
+            "FOREIGN KEY(" + TACKY_CURRENTROOM + ") REFERENCES " + LocalRoom_DB.ROOM_TABLE + "(" + LocalRoom_DB.ROOM_NAME + ")," +
             "FOREIGN KEY(" + TACKY_HEAD + ") REFERENCES " + HEAD_TABLE + "(" + HEAD_ID + ")," +
             "FOREIGN KEY(" + TACKY_BODY + ") REFERENCES " + BODY_TABLE + "(" + BODY_ID + ")," +
             "FOREIGN KEY(" + TACKY_EXPRESSION + ") REFERENCES " + EXPRESSION_TABLE + "(" + EXPRESSION_ID + "))";
@@ -72,7 +72,7 @@ public class Tacky_DB {
                                                        "FROM " + TACKY_TABLE +
                                                        " WHERE " + TACKY_NAME + " = '%s'";
 
-    public Tacky_DB(Context ctx){
+    public LocalTacky_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
     }

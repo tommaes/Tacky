@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.nextgen.tacky.basic.State.MoodState;
-import com.nextgen.tacky.db.localDB.TackyExpression_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyExpression_DB;
 
 /**
  * Created by maes on 14/11/13.
@@ -31,15 +31,15 @@ public class TackyExpression implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(TackyExpression_DB db, MoodState.MoodValue moodValue){
+    public Bitmap getFront(LocalTackyExpression_DB db, MoodState.MoodValue moodValue){
         return front.getExpression(db, moodValue);
     }
 
-    public Bitmap getSide(TackyExpression_DB db, MoodState.MoodValue moodValue){
+    public Bitmap getSide(LocalTackyExpression_DB db, MoodState.MoodValue moodValue){
         return side.getExpression(db, moodValue);
     }
 
-    public Bitmap getSleep(TackyExpression_DB db) {
+    public Bitmap getSleep(LocalTackyExpression_DB db) {
         return sleep.getExpression(db, null);
     }
 

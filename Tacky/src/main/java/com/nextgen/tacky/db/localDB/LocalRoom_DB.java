@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 21/05/14.
  */
-public class Room_DB {
+public class LocalRoom_DB {
 
     private static LocalDatabase db = null;
 
@@ -31,7 +31,7 @@ public class Room_DB {
             ROOM_VISUAL + " TEXT," +
             ROOM_TYPE + " INTEGER," +
             "PRIMARY KEY(" + ROOM_NAME + "," + ROOM_OWNER + ")," +
-            "FOREIGN KEY(" + ROOM_OWNER + ") REFERENCES " + Tacky_DB.TACKY_TABLE + "(" + Tacky_DB.TACKY_NAME + "))";
+            "FOREIGN KEY(" + ROOM_OWNER + ") REFERENCES " + LocalTacky_DB.TACKY_TABLE + "(" + LocalTacky_DB.TACKY_NAME + "))";
 
     private static final String ROOM_SQL_SELECT_ALL = "SELECT * " +
                                                       "FROM " + ROOM_TABLE +
@@ -41,7 +41,7 @@ public class Room_DB {
                                                        " WHERE " + ROOM_NAME + " = '%s'" + " AND " +
                                                        ROOM_OWNER + " = '%s'";
 
-    public Room_DB(Context ctx){
+    public LocalRoom_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
     }

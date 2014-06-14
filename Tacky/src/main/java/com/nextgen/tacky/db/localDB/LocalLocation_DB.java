@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 23/05/14.
  */
-public class Location_DB {
+public class LocalLocation_DB {
 
     private static LocalDatabase db = null;
 
@@ -45,7 +45,7 @@ public class Location_DB {
 
     private static final int RADIUS_SELECT = 500;
 
-    public Location_DB(Context context){
+    public LocalLocation_DB(Context context){
         if(db == null)
             db = LocalDatabase.getDatabase(context);
     }

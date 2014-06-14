@@ -8,7 +8,7 @@ import android.graphics.Matrix;
 
 import com.nextgen.tacky.activities.rooms.MainRoom;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.TackyDisplayObject_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyDisplayObject_DB;
 import com.nextgen.tacky.display.TackyDisplayObject;
 
 /**
@@ -27,7 +27,7 @@ public class TackyDisplay implements Display {
 
     private TackyPosition tackyPosition;
 
-    private TackyDisplayObject_DB tackyDisplayObject_db;
+    private LocalTackyDisplayObject_DB localTackyDisplayObject_db;
     private TackyDisplayObject tackyDisplayObject;
 
     private enum TackyPosition {
@@ -44,8 +44,8 @@ public class TackyDisplay implements Display {
         this.tacky = t;
         int imageResource2 = context.getResources().getIdentifier("rip", "drawable", MainRoom.MAIN_TACKY_PACKAGE);
         this.rip = BitmapFactory.decodeResource(context.getResources(), imageResource2);
-        this.tackyDisplayObject_db = new TackyDisplayObject_DB(context);
-        this.tackyDisplayObject = tackyDisplayObject_db.getTackyDisplayObject(t);
+        this.localTackyDisplayObject_db = new LocalTackyDisplayObject_DB(context);
+        this.tackyDisplayObject = localTackyDisplayObject_db.getTackyDisplayObject(t);
         this.tackyPosition = TackyPosition.NORMAL;
         this.display = display;
     }
@@ -146,34 +146,34 @@ public class TackyDisplay implements Display {
     }
 
     private void displayFrontTacky(Canvas canvas){
-        Bitmap body = tackyDisplayObject.getBodyFront(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadFront(tackyDisplayObject_db);
-        Bitmap expression = tackyDisplayObject.getExpressionFront(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodyFront(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadFront(localTackyDisplayObject_db);
+        Bitmap expression = tackyDisplayObject.getExpressionFront(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         displayTacky(canvas, head, body, expression);
     }
 
     private void displayFrontTackyReadyToSleep(Canvas canvas){
-        Bitmap body = tackyDisplayObject.getBodySleep(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadSleep(tackyDisplayObject_db);
-        Bitmap expression = tackyDisplayObject.getExpressionFront(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodySleep(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadSleep(localTackyDisplayObject_db);
+        Bitmap expression = tackyDisplayObject.getExpressionFront(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         displayTacky(canvas, head, body, expression);
     }
 
     private void displayFrontTackySleep(Canvas canvas){
-        Bitmap body = tackyDisplayObject.getBodySleep(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadSleep(tackyDisplayObject_db);
-        Bitmap expression = tackyDisplayObject.getExpressionSleep(tackyDisplayObject_db);
+        Bitmap body = tackyDisplayObject.getBodySleep(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadSleep(localTackyDisplayObject_db);
+        Bitmap expression = tackyDisplayObject.getExpressionSleep(localTackyDisplayObject_db);
 
         displayTacky(canvas, head, body, expression);
     }
 
     private void displayLeftNormalTacky(Canvas canvas){
 
-        Bitmap body = tackyDisplayObject.getBodySide(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadSide(tackyDisplayObject_db);
-        Bitmap expression = tackyDisplayObject.getExpressionSide(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodySide(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadSide(localTackyDisplayObject_db);
+        Bitmap expression = tackyDisplayObject.getExpressionSide(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         displayTacky(canvas, head, body, expression);
     }
@@ -182,9 +182,9 @@ public class TackyDisplay implements Display {
         Matrix matrix = new Matrix();
         matrix.setScale(-1, 1);
 
-        Bitmap body = tackyDisplayObject.getBodySide(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadSide(tackyDisplayObject_db);
-        Bitmap front = tackyDisplayObject.getExpressionSide(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodySide(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadSide(localTackyDisplayObject_db);
+        Bitmap front = tackyDisplayObject.getExpressionSide(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         Bitmap bodyRight = Bitmap.createBitmap(body, 0, 0, body.getWidth(), body.getHeight(), matrix, true);
         Bitmap headRight = Bitmap.createBitmap(head, 0, 0, head.getWidth(), head.getHeight(), matrix, true);
@@ -195,9 +195,9 @@ public class TackyDisplay implements Display {
 
     private void displayLeftUpTacky(Canvas canvas){
 
-        Bitmap body = tackyDisplayObject.getBodyUp(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadUp(tackyDisplayObject_db);
-        Bitmap expression = tackyDisplayObject.getExpressionSide(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodyUp(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadUp(localTackyDisplayObject_db);
+        Bitmap expression = tackyDisplayObject.getExpressionSide(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         displayTacky(canvas, head, body, expression);
     }
@@ -206,9 +206,9 @@ public class TackyDisplay implements Display {
         Matrix matrix = new Matrix();
         matrix.setScale(-1, 1);
 
-        Bitmap body = tackyDisplayObject.getBodyUp(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadUp(tackyDisplayObject_db);
-        Bitmap front = tackyDisplayObject.getExpressionSide(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodyUp(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadUp(localTackyDisplayObject_db);
+        Bitmap front = tackyDisplayObject.getExpressionSide(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         Bitmap bodyRight = Bitmap.createBitmap(body, 0, 0, body.getWidth(), body.getHeight(), matrix, true);
         Bitmap headRight = Bitmap.createBitmap(head, 0, 0, head.getWidth(), head.getHeight(), matrix, true);
@@ -219,9 +219,9 @@ public class TackyDisplay implements Display {
 
     private void displayLeftDownTacky(Canvas canvas){
 
-        Bitmap body = tackyDisplayObject.getBodyDown(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadDown(tackyDisplayObject_db);
-        Bitmap expression = tackyDisplayObject.getExpressionSide(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodyDown(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadDown(localTackyDisplayObject_db);
+        Bitmap expression = tackyDisplayObject.getExpressionSide(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         displayTacky(canvas, head, body, expression);
     }
@@ -230,9 +230,9 @@ public class TackyDisplay implements Display {
         Matrix matrix = new Matrix();
         matrix.setScale(-1, 1);
 
-        Bitmap body = tackyDisplayObject.getBodyDown(tackyDisplayObject_db);
-        Bitmap head = tackyDisplayObject.getHeadDown(tackyDisplayObject_db);
-        Bitmap front = tackyDisplayObject.getExpressionSide(tackyDisplayObject_db, tacky.getTackyHappiness());
+        Bitmap body = tackyDisplayObject.getBodyDown(localTackyDisplayObject_db);
+        Bitmap head = tackyDisplayObject.getHeadDown(localTackyDisplayObject_db);
+        Bitmap front = tackyDisplayObject.getExpressionSide(localTackyDisplayObject_db, tacky.getTackyHappiness());
 
         Bitmap bodyRight = Bitmap.createBitmap(body, 0, 0, body.getWidth(), body.getHeight(), matrix, true);
         Bitmap headRight = Bitmap.createBitmap(head, 0, 0, head.getWidth(), head.getHeight(), matrix, true);

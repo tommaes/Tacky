@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.nextgen.tacky.basic.State.MoodState;
-import com.nextgen.tacky.db.localDB.TackyExpression_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyExpression_DB;
 
 /**
  * Created by maes on 7/06/14.
@@ -34,7 +34,7 @@ public class Expression implements Parcelable {
         this.sad = p.readParcelable(DisplayItem.class.getClassLoader());
     }
 
-    public Bitmap getExpression(TackyExpression_DB db, MoodState.MoodValue moodValue){
+    public Bitmap getExpression(LocalTackyExpression_DB db, MoodState.MoodValue moodValue){
         Bitmap displayItem = null;
         switch (moodValue) {
             case HAPPY: {
@@ -53,19 +53,19 @@ public class Expression implements Parcelable {
         return displayItem;
     }
 
-    private Bitmap getHappyExpression(TackyExpression_DB db) {
+    private Bitmap getHappyExpression(LocalTackyExpression_DB db) {
         return getBitmap(db, happy);
     }
 
-    private Bitmap getNormalExpression(TackyExpression_DB db) {
+    private Bitmap getNormalExpression(LocalTackyExpression_DB db) {
         return getBitmap(db, normal);
     }
 
-    private Bitmap getSadExpression(TackyExpression_DB db) {
+    private Bitmap getSadExpression(LocalTackyExpression_DB db) {
         return getBitmap(db, sad);
     }
 
-    private Bitmap getBitmap(TackyExpression_DB db, DisplayItem displayItem) {
+    private Bitmap getBitmap(LocalTackyExpression_DB db, DisplayItem displayItem) {
         if (!displayItem.hasBitmap())
             displayItem.setBitmap(db.decodeImage(displayItem.getName()));
         return displayItem.getBitmap();

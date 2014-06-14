@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 23/05/14.
  */
-public class TackyBody_DB {
+public class LocalTackyBody_DB {
 
     private static LocalDatabase db = null;
     private Context context;
@@ -36,7 +36,7 @@ public class TackyBody_DB {
     private static final String BODY_SQL_SELECT_BODY = "SELECT * FROM " + BODY_TABLE +
                                                         " WHERE " + BODY_ID + " = '%s'";
 
-    public TackyBody_DB(Context ctx){
+    public LocalTackyBody_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
         context = ctx;

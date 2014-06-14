@@ -12,7 +12,7 @@ import android.os.Bundle;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
 import com.nextgen.tacky.basic.TackyLocation;
-import com.nextgen.tacky.db.localDB.Location_DB;
+import com.nextgen.tacky.db.localDB.LocalLocation_DB;
 import com.nextgen.tacky.sensor.gps.OutdoorsCommand;
 import com.nextgen.tacky.sensor.gps.OutdoorsLocationListener;
 
@@ -25,7 +25,7 @@ public class Outdoors extends MainRoom {
     protected OutdoorsCommand outdoorsCommand;
     protected static TackyLocation CURRENT_LOCATION = null; // prevent repeatedly asking user about the same location
     private boolean dialogOpen = false;
-    final Location_DB location_db = new Location_DB(this);
+    final LocalLocation_DB localLocation_db = new LocalLocation_DB(this);
 
     public enum OutdoorsType {
         NORMAL,
@@ -40,7 +40,7 @@ public class Outdoors extends MainRoom {
         outdoorsCommand = new OutdoorsCommand() {
             @Override
             public void onLocationChanged(Location location) {
-                TackyLocation query = location_db.getNearbyLocation(location);
+                TackyLocation query = localLocation_db.getNearbyLocation(location);
                 if (query != null){
                     if (CURRENT_LOCATION == null || (!query.isSameLocation(CURRENT_LOCATION) && !dialogOpen)) {
                         askUser(query);

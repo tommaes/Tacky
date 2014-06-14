@@ -10,12 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nextgen.tacky.R;
-import com.nextgen.tacky.basic.Room;
-import com.nextgen.tacky.db.localDB.Room_DB;
-import com.nextgen.tacky.db.localDB.Tacky_DB;
+import com.nextgen.tacky.db.localDB.LocalRoom_DB;
+import com.nextgen.tacky.db.localDB.LocalTacky_DB;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by maes on 12/11/13.
@@ -55,15 +53,15 @@ public class Chamber extends MainRoom {
 
     public void changeBackgroundRoom(){
         final Dialog dialog = new Dialog(this);
-        final Room_DB room_db = new Room_DB(this);
-        final Tacky_DB tacky_db = new Tacky_DB(this);
+        final LocalRoom_DB localRoom_db = new LocalRoom_DB(this);
+        final LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Change background room.");
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        ArrayList<String> backgrounds = room_db.getBackgrounds();
+        ArrayList<String> backgrounds = localRoom_db.getBackgrounds();
 
         for(final String background : backgrounds){
             ImageView i = new ImageView(this);
@@ -74,8 +72,8 @@ public class Chamber extends MainRoom {
                 @Override
                 public void onClick(View v) {
                     tacky.setRoomVisualization(background);
-                    tacky_db.updateTacky(tacky);
-                    room_db.storeRoom(tacky);
+                    localTacky_db.updateTacky(tacky);
+                    localRoom_db.storeRoom(tacky);
                     dialog.dismiss();
                 }
             });

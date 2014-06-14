@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 19/05/14.
  */
-public class Food_DB {
+public class LocalFood_DB {
 
     private static final String FOOD_TABLE = "foods";
 
@@ -32,7 +32,7 @@ public class Food_DB {
 
     private static LocalDatabase db = null;
 
-    public Food_DB(Context ctx){
+    public LocalFood_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
     }

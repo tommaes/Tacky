@@ -3,19 +3,18 @@ package com.nextgen.tackyTests.unitTests.db;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 
-import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.Room_DB;
+import com.nextgen.tacky.db.localDB.LocalRoom_DB;
 
 import java.util.ArrayList;
 
 /**
  * Created by maes on 6/06/14.
  */
-public class Room_DBTest extends AndroidTestCase {
+public class LocalRoom_DBTest extends AndroidTestCase {
 
-    private Room_DB room_db;
+    private LocalRoom_DB localRoom_db;
 
     // Room info
     private String name = "name";
@@ -30,16 +29,16 @@ public class Room_DBTest extends AndroidTestCase {
 
     public void setUp(){
         RenamingDelegatingContext renamingDelegatingContext = new RenamingDelegatingContext(getContext(), "test_DB_");
-        room_db = new Room_DB(renamingDelegatingContext);
+        localRoom_db = new LocalRoom_DB(renamingDelegatingContext);
     }
 
     public void testAddRoomAndGetRoom1() throws Exception {
         Room room = new Room(name, visual, type);
         Tacky tacky = new Tacky(tackyName, room, headId, bodyId, expressionId);
 
-        room_db.storeRoom(room, tacky);
+        localRoom_db.storeRoom(room, tacky);
 
-        Room readRoom = room_db.getRoom(name, tackyName);
+        Room readRoom = localRoom_db.getRoom(name, tackyName);
 
         assertEquals(room.getName(), readRoom.getName());
         assertEquals(room.getVisualization(), readRoom.getVisualization());
@@ -51,9 +50,9 @@ public class Room_DBTest extends AndroidTestCase {
         Room room = new Room(name, visual, type);
         Tacky tacky = new Tacky(tackyName, room, headId, bodyId, expressionId);
 
-        room_db.storeRoom(tacky);
+        localRoom_db.storeRoom(tacky);
 
-        Room readRoom = room_db.getRoom(name, tackyName);
+        Room readRoom = localRoom_db.getRoom(name, tackyName);
 
         assertEquals(room.getName(), readRoom.getName());
         assertEquals(room.getVisualization(), readRoom.getVisualization());
@@ -65,9 +64,9 @@ public class Room_DBTest extends AndroidTestCase {
         Room room = new Room(name, visual, type);
         Tacky tacky = new Tacky(tackyName, room, headId, bodyId, expressionId);
 
-        room_db.storeRoom(room, tacky);
+        localRoom_db.storeRoom(room, tacky);
 
-        ArrayList<Room> rooms = room_db.getRooms(tacky);
+        ArrayList<Room> rooms = localRoom_db.getRooms(tacky);
 
         boolean contains = false;
 

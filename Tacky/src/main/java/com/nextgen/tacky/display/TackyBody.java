@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.nextgen.tacky.db.localDB.TackyBody_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyBody_DB;
 
 /**
  * Created by maes on 14/11/13.
@@ -24,27 +24,27 @@ public class TackyBody implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(TackyBody_DB db) {
+    public Bitmap getFront(LocalTackyBody_DB db) {
         return getBitmap(db, body);
     }
 
-    public Bitmap getSide(TackyBody_DB db) {
+    public Bitmap getSide(LocalTackyBody_DB db) {
         return getBitmap(db, body);
     }
 
-    public Bitmap getSleep(TackyBody_DB db) {
+    public Bitmap getSleep(LocalTackyBody_DB db) {
         return getBitmap(db, body);
     }
 
-    public Bitmap getUp(TackyBody_DB db) {
+    public Bitmap getUp(LocalTackyBody_DB db) {
         return getBitmap(db, body);
     }
 
-    public Bitmap getDown(TackyBody_DB db) {
+    public Bitmap getDown(LocalTackyBody_DB db) {
         return getBitmap(db, body);
     }
 
-    private Bitmap getBitmap(TackyBody_DB db, DisplayItem displayItem) {
+    private Bitmap getBitmap(LocalTackyBody_DB db, DisplayItem displayItem) {
         if (!displayItem.hasBitmap())
             displayItem.setBitmap(db.decodeImage(displayItem.getName()));
         return displayItem.getBitmap();

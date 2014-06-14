@@ -30,9 +30,9 @@ import com.nextgen.tacky.activities.MainTackySurface;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.Food_DB;
-import com.nextgen.tacky.db.localDB.Room_DB;
-import com.nextgen.tacky.db.localDB.Tacky_DB;
+import com.nextgen.tacky.db.localDB.LocalFood_DB;
+import com.nextgen.tacky.db.localDB.LocalRoom_DB;
+import com.nextgen.tacky.db.localDB.LocalTacky_DB;
 import com.nextgen.tacky.threads.TackyThread;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class MainRoom extends Activity {
         SurfaceHolder sh = surf.getHolder();
         MAIN_TACKY_PACKAGE = getApplicationContext().getPackageName();
         this.mainTackySurface = new MainTackySurface(this, this, sh, tacky);
-        tackyThread = new TackyThread(tacky, new Tacky_DB(this));
+        tackyThread = new TackyThread(tacky, new LocalTacky_DB(this));
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0,
@@ -100,8 +100,8 @@ public class MainRoom extends Activity {
     }
 
     public void onBackPressed() {
-        Tacky_DB tacky_db = new Tacky_DB(this);
-        tacky_db.updateTackyWithoutRoom(tacky);
+        LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
+        localTacky_db.updateTackyWithoutRoom(tacky);
         super.onBackPressed();
     }
 
@@ -127,12 +127,12 @@ public class MainRoom extends Activity {
 
     public void changeRoom(){
         final Dialog dialog = new Dialog(this);
-        final Room_DB room_db = new Room_DB(this);
-        final Tacky_DB tacky_db = new Tacky_DB(this);
+        final LocalRoom_DB localRoom_db = new LocalRoom_DB(this);
+        final LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Rooms");
 
-        ArrayList<Room> rooms = room_db.getRooms(this.tacky);
+        ArrayList<Room> rooms = localRoom_db.getRooms(this.tacky);
 
         final Context mainTacky = this;
 
@@ -149,7 +149,7 @@ public class MainRoom extends Activity {
                 @Override
                 public void onClick(View v) {
                     tacky.setCurrentRoom(r);
-                    tacky_db.updateTacky(tacky);
+                    localTacky_db.updateTacky(tacky);
                     Intent intent = RoomSwitch.roomSwitch(mainTacky, tacky);
                     dialog.dismiss();
                     startActivity(intent);
@@ -162,9 +162,9 @@ public class MainRoom extends Activity {
     }
 
     public void onDestroy(){
-        Tacky_DB tacky_db = new Tacky_DB(this);
+        LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
         tackyThread.stopRunning();
-        tacky_db.updateTackyWithoutRoom(this.tacky);
+        localTacky_db.updateTackyWithoutRoom(this.tacky);
         disableNfcAdapterDispatch();
         super.onDestroy();
     }
@@ -184,7 +184,7 @@ public class MainRoom extends Activity {
 
     public void newFood(final Food f){
         final Dialog dialog = new Dialog(this);
-        final Food_DB food_db = new Food_DB(this);
+        final LocalFood_DB localFood_db = new LocalFood_DB(this);
         dialog.setContentView(R.layout.activity_new_food);
         dialog.setTitle("New food discovered.");
         dialog.show();
@@ -201,7 +201,7 @@ public class MainRoom extends Activity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                food_db.storeFood(f);
+                localFood_db.storeFood(f);
                 dialog.dismiss();
             }
         });

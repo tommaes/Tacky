@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by maes on 23/05/14.
  */
-public class TackyHead_DB {
+public class LocalTackyHead_DB {
 
     private static LocalDatabase db = null;
     private Context context;
@@ -42,7 +42,7 @@ public class TackyHead_DB {
     private static final String HEAD_SQL_SELECT_HEAD = "SELECT * FROM " + HEAD_TABLE +
                                                        " WHERE " + HEAD_ID + " = '%s'";
 
-    public TackyHead_DB(Context ctx){
+    public LocalTackyHead_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
         context = ctx;

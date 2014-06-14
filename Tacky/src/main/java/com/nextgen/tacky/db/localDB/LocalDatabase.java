@@ -31,14 +31,14 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
         LocalDatabase.sqLiteDatabase = sqLiteDatabase;
 
-        Food_DB.initializeTable(db);
-        Room_DB.initializeTable(db);
-        Tacky_DB.initializeTable(db);
-        TackyHead_DB.initializeTable(db);
-        TackyBody_DB.initializeTable(db);
-        TackyExpression_DB.initializeTable(db);
-        TackyEventHead_DB.initializeTable(db);
-        Location_DB.initializeTable(db);
+        LocalFood_DB.initializeTable(db);
+        LocalRoom_DB.initializeTable(db);
+        LocalTacky_DB.initializeTable(db);
+        LocalTackyHead_DB.initializeTable(db);
+        LocalTackyBody_DB.initializeTable(db);
+        LocalTackyExpression_DB.initializeTable(db);
+        LocalTackyEventHead_DB.initializeTable(db);
+        LocalLocation_DB.initializeTable(db);
 
         LocalDatabase.sqLiteDatabase = null;
     }
@@ -48,14 +48,14 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         LocalDatabase.sqLiteDatabase = sqLiteDatabase;
 
-        Food_DB.dropTable(db, dropTable);
-        Room_DB.dropTable(db, dropTable);
-        Tacky_DB.dropTable(db, dropTable);
-        TackyHead_DB.dropTable(db, dropTable);
-        TackyBody_DB.dropTable(db, dropTable);
-        TackyExpression_DB.dropTable(db, dropTable);
-        TackyEventHead_DB.dropTable(db, dropTable);
-        Location_DB.dropTable(db, dropTable);
+        LocalFood_DB.dropTable(db, dropTable);
+        LocalRoom_DB.dropTable(db, dropTable);
+        LocalTacky_DB.dropTable(db, dropTable);
+        LocalTackyHead_DB.dropTable(db, dropTable);
+        LocalTackyBody_DB.dropTable(db, dropTable);
+        LocalTackyExpression_DB.dropTable(db, dropTable);
+        LocalTackyEventHead_DB.dropTable(db, dropTable);
+        LocalLocation_DB.dropTable(db, dropTable);
 
         onCreate(sqLiteDatabase);
         LocalDatabase.sqLiteDatabase = null;

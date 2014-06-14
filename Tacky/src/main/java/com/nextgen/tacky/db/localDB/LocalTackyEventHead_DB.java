@@ -12,7 +12,7 @@ import com.nextgen.tacky.display.TackyHead;
 /**
  * Created by maes on 29/05/14.
  */
-public class TackyEventHead_DB {
+public class LocalTackyEventHead_DB {
 
     private static LocalDatabase db = null;
 
@@ -38,7 +38,7 @@ public class TackyEventHead_DB {
     private static final String EVENT_HEAD_SQL_SELECT_HEAD = "SELECT * FROM " + EVENT_HEAD_TABLE +
                                                              " WHERE " + EVENT_START + " <= '%s' AND " + EVENT_END + " >= '%s'";
 
-    public TackyEventHead_DB(Context ctx){
+    public LocalTackyEventHead_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
     }

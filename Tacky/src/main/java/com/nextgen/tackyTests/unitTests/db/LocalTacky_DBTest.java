@@ -5,21 +5,20 @@ import android.test.RenamingDelegatingContext;
 
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.Tacky_DB;
+import com.nextgen.tacky.db.localDB.LocalTacky_DB;
 import com.nextgen.tacky.display.Expression;
 import com.nextgen.tacky.display.TackyBody;
 import com.nextgen.tacky.display.TackyExpression;
 import com.nextgen.tacky.display.TackyHead;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by maes on 6/06/14.
  */
-public class Tacky_DBTest extends AndroidTestCase {
+public class LocalTacky_DBTest extends AndroidTestCase {
 
-    private Tacky_DB tacky_db;
+    private LocalTacky_DB localTacky_db;
 
     // Room info
     private String name = "name";
@@ -42,14 +41,14 @@ public class Tacky_DBTest extends AndroidTestCase {
 
     public void setUp(){
         RenamingDelegatingContext renamingDelegatingContext = new RenamingDelegatingContext(getContext(), "test_DB_");
-        tacky_db = new Tacky_DB(renamingDelegatingContext);
+        localTacky_db = new LocalTacky_DB(renamingDelegatingContext);
     }
 
     public void testAddTackyAndGetTacky() throws Exception {
 
-        tacky_db.initializeTacky(tackyName, tackyHead, tackyBody, tackyExpression);
+        localTacky_db.initializeTacky(tackyName, tackyHead, tackyBody, tackyExpression);
 
-        Tacky tacky = tacky_db.getTacky(tackyName);
+        Tacky tacky = localTacky_db.getTacky(tackyName);
 
         assertTrue(tacky.isAlive());
         assertEquals(headId, tacky.getHeadId());
@@ -59,9 +58,9 @@ public class Tacky_DBTest extends AndroidTestCase {
 
     public void testAddTackyAndGetTackyNames() throws Exception {
 
-        tacky_db.initializeTacky(tackyName, tackyHead, tackyBody, tackyExpression);
+        localTacky_db.initializeTacky(tackyName, tackyHead, tackyBody, tackyExpression);
 
-        ArrayList<String> names = tacky_db.getTackyNames();
+        ArrayList<String> names = localTacky_db.getTackyNames();
 
         boolean isAdded = false;
 
@@ -77,13 +76,13 @@ public class Tacky_DBTest extends AndroidTestCase {
 
     public void testAddTackyAndDeleteTacky() throws Exception {
 
-        tacky_db.initializeTacky(tackyName, tackyHead, tackyBody, tackyExpression);
+        localTacky_db.initializeTacky(tackyName, tackyHead, tackyBody, tackyExpression);
 
-        assertNotNull(tacky_db.getTacky(tackyName));
+        assertNotNull(localTacky_db.getTacky(tackyName));
 
-        tacky_db.deleteTacky(tackyName);
+        localTacky_db.deleteTacky(tackyName);
 
-        assertNull(tacky_db.getTacky(tackyName));
+        assertNull(localTacky_db.getTacky(tackyName));
     }
 
 }

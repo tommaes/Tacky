@@ -5,8 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.nextgen.tacky.basic.State.MoodState;
-import com.nextgen.tacky.basic.tacky.TackyState;
-import com.nextgen.tacky.db.localDB.TackyDisplayObject_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyDisplayObject_DB;
 
 /**
  * Created by maes on 7/11/13.
@@ -29,55 +28,55 @@ public class TackyDisplayObject implements Parcelable {
         this.expression = p.readParcelable(TackyExpression.class.getClassLoader());
     }
 
-    public Bitmap getHeadFront(TackyDisplayObject_DB db) {
+    public Bitmap getHeadFront(LocalTackyDisplayObject_DB db) {
         return head.getFront(db.getTackyHead_db());
     }
 
-    public Bitmap getHeadSleep(TackyDisplayObject_DB db) {
+    public Bitmap getHeadSleep(LocalTackyDisplayObject_DB db) {
         return head.getSleep(db.getTackyHead_db());
     }
 
-    public Bitmap getHeadDown(TackyDisplayObject_DB db) {
+    public Bitmap getHeadDown(LocalTackyDisplayObject_DB db) {
         return head.getDown(db.getTackyHead_db());
     }
 
-    public Bitmap getHeadSide(TackyDisplayObject_DB db) {
+    public Bitmap getHeadSide(LocalTackyDisplayObject_DB db) {
         return head.getSide(db.getTackyHead_db());
     }
 
-    public Bitmap getHeadUp(TackyDisplayObject_DB db) {
+    public Bitmap getHeadUp(LocalTackyDisplayObject_DB db) {
         return head.getUp(db.getTackyHead_db());
     }
 
-    public Bitmap getBodyFront(TackyDisplayObject_DB db) {
+    public Bitmap getBodyFront(LocalTackyDisplayObject_DB db) {
         return body.getFront(db.getTackyBody_db());
     }
 
-    public Bitmap getBodySleep(TackyDisplayObject_DB db) {
+    public Bitmap getBodySleep(LocalTackyDisplayObject_DB db) {
         return body.getSleep(db.getTackyBody_db());
     }
 
-    public Bitmap getBodyUp(TackyDisplayObject_DB db) {
+    public Bitmap getBodyUp(LocalTackyDisplayObject_DB db) {
         return body.getUp(db.getTackyBody_db());
     }
 
-    public Bitmap getBodyDown(TackyDisplayObject_DB db) {
+    public Bitmap getBodyDown(LocalTackyDisplayObject_DB db) {
         return body.getDown(db.getTackyBody_db());
     }
 
-    public Bitmap getBodySide(TackyDisplayObject_DB db) {
+    public Bitmap getBodySide(LocalTackyDisplayObject_DB db) {
         return body.getSide(db.getTackyBody_db());
     }
 
-    public Bitmap getExpressionFront(TackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
+    public Bitmap getExpressionFront(LocalTackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
         return expression.getFront(db.getTackyExpression_db(), moodValue);
     }
 
-    public Bitmap getExpressionSide(TackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
+    public Bitmap getExpressionSide(LocalTackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
         return expression.getSide(db.getTackyExpression_db(), moodValue);
     }
 
-    public Bitmap getExpressionSleep(TackyDisplayObject_DB db) {
+    public Bitmap getExpressionSleep(LocalTackyDisplayObject_DB db) {
         return expression.getSleep(db.getTackyExpression_db());
     }
 

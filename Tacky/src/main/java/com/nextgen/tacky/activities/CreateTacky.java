@@ -21,11 +21,11 @@ import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.rooms.RoomSwitch;
 import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.Room_DB;
-import com.nextgen.tacky.db.localDB.TackyBody_DB;
-import com.nextgen.tacky.db.localDB.TackyExpression_DB;
-import com.nextgen.tacky.db.localDB.TackyHead_DB;
-import com.nextgen.tacky.db.localDB.Tacky_DB;
+import com.nextgen.tacky.db.localDB.LocalRoom_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyBody_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyExpression_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyHead_DB;
+import com.nextgen.tacky.db.localDB.LocalTacky_DB;
 import com.nextgen.tacky.display.TackyBody;
 import com.nextgen.tacky.display.TackyExpression;
 import com.nextgen.tacky.display.TackyHead;
@@ -89,24 +89,24 @@ public class CreateTacky extends Activity {
 
     private void choseHead(){
         final Dialog dialog = new Dialog(this);
-        final TackyHead_DB tackyHead_db = new TackyHead_DB(this);
+        final LocalTackyHead_DB localTackyHead_db = new LocalTackyHead_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Choose a head for your Tacky");
 
-        ArrayList<TackyHead> heads = tackyHead_db.getHeads();
+        ArrayList<TackyHead> heads = localTackyHead_db.getHeads();
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         imageParams.setMargins(10, 0, 10, 0);
         for(final TackyHead h : heads){
             ImageView i = new ImageView(this);
-            i.setImageBitmap(h.getFront(tackyHead_db));
+            i.setImageBitmap(h.getFront(localTackyHead_db));
             i.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
                     head = h;
-                    Bitmap bitmap = h.getFront(tackyHead_db).copy(Bitmap.Config.ARGB_8888, true);
+                    Bitmap bitmap = h.getFront(localTackyHead_db).copy(Bitmap.Config.ARGB_8888, true);
                     Canvas canvas = new Canvas(bitmap);
                     imageView.draw(canvas);
                     imageView.setImageBitmap(bitmap);
@@ -119,24 +119,24 @@ public class CreateTacky extends Activity {
 
     private void choseBody(){
         final Dialog dialog = new Dialog(this);
-        final TackyBody_DB tackyBody_db = new TackyBody_DB(this);
+        final LocalTackyBody_DB localTackyBody_db = new LocalTackyBody_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Choose a body for your Tacky");
 
-        ArrayList<TackyBody> bodies = tackyBody_db.getBodies();
+        ArrayList<TackyBody> bodies = localTackyBody_db.getBodies();
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         imageParams.setMargins(10, 0, 10, 0);
         for(final TackyBody b : bodies){
             ImageView i = new ImageView(this);
-            i.setImageBitmap(b.getFront(tackyBody_db));
+            i.setImageBitmap(b.getFront(localTackyBody_db));
             i.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
                     body = b;
-                    Bitmap bitmap = b.getFront(tackyBody_db).copy(Bitmap.Config.ARGB_8888, true);
+                    Bitmap bitmap = b.getFront(localTackyBody_db).copy(Bitmap.Config.ARGB_8888, true);
                     Canvas canvas = new Canvas(bitmap);
                     imageView.draw(canvas);
                     imageView.setImageBitmap(bitmap);
@@ -149,24 +149,24 @@ public class CreateTacky extends Activity {
 
     private void choseExpression(){
         final Dialog dialog = new Dialog(this);
-        final TackyExpression_DB tackyExpression_db = new TackyExpression_DB(this);
+        final LocalTackyExpression_DB localTackyExpression_db = new LocalTackyExpression_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Choose an expression for your Tacky");
 
-        ArrayList<TackyExpression> expressions = tackyExpression_db.getExpressions();
+        ArrayList<TackyExpression> expressions = localTackyExpression_db.getExpressions();
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         imageParams.setMargins(10, 0, 10, 0);
         for(final TackyExpression e : expressions){
             ImageView i = new ImageView(this);
-            i.setImageBitmap(e.getFront(tackyExpression_db, MoodState.MoodValue.HAPPY));
+            i.setImageBitmap(e.getFront(localTackyExpression_db, MoodState.MoodValue.HAPPY));
             i.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
                     expression = e;
-                    Bitmap eb = e.getFront(tackyExpression_db, MoodState.MoodValue.HAPPY).copy(Bitmap.Config.ARGB_8888, true);
+                    Bitmap eb = e.getFront(localTackyExpression_db, MoodState.MoodValue.HAPPY).copy(Bitmap.Config.ARGB_8888, true);
                     Bitmap bitmap = Bitmap.createBitmap(eb.getWidth(), eb.getHeight(),Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bitmap);
                     imageView.draw(canvas);
@@ -180,16 +180,16 @@ public class CreateTacky extends Activity {
     }
 
     public void createTacky(View view) {
-        Room_DB room_db = new Room_DB(this);
-        Tacky_DB tacky_db = new Tacky_DB(this);
+        LocalRoom_DB localRoom_db = new LocalRoom_DB(this);
+        LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
         EditText editText = (EditText) findViewById(R.id.nameTacky);
         String name = editText.getText().toString();
         if (!name.equals("")) {
-            Tacky tacky = tacky_db.getTacky(name);
+            Tacky tacky = localTacky_db.getTacky(name);
             if(tacky == null){
                 if(head != null && body != null && expression != null) {
-                    tacky = tacky_db.initializeTacky(name, head, body, expression);
-                    room_db.initializeTackyRooms(tacky);
+                    tacky = localTacky_db.initializeTacky(name, head, body, expression);
+                    localRoom_db.initializeTackyRooms(tacky);
                     Intent intent = new RoomSwitch().roomSwitch(this, tacky);
                     startActivity(intent);
                     finish();

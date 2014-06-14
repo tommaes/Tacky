@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.rooms.RoomSwitch;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.Room_DB;
-import com.nextgen.tacky.db.localDB.Tacky_DB;
+import com.nextgen.tacky.db.localDB.LocalRoom_DB;
+import com.nextgen.tacky.db.localDB.LocalTacky_DB;
 
 import java.util.ArrayList;
 
@@ -24,13 +24,13 @@ import java.util.ArrayList;
 public class LoadSavedTackys extends Activity {
 
     protected void onCreate(Bundle savedInstanceState){
-        final Tacky_DB tacky_db = new Tacky_DB(this);
-        final Room_DB room_db = new Room_DB(this);
+        final LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
+        final LocalRoom_DB localRoom_db = new LocalRoom_DB(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_saved_tackys);
         LinearLayout l = (LinearLayout) findViewById(R.id.savedTackys);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ArrayList<String> names = tacky_db.getTackyNames();
+        ArrayList<String> names = localTacky_db.getTackyNames();
         final Context context = this;
         for(final String name : names){
             TextView text = new TextView(this);
@@ -40,8 +40,8 @@ public class LoadSavedTackys extends Activity {
             text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Tacky tacky = tacky_db.getTacky(name);
-                        tacky.setCurrentRoom(room_db.getRoom(tacky.getRoomName(), tacky.getName()));
+                        Tacky tacky = localTacky_db.getTacky(name);
+                        tacky.setCurrentRoom(localRoom_db.getRoom(tacky.getRoomName(), tacky.getName()));
                         Intent intent = new RoomSwitch().roomSwitch(context, tacky);
                         startActivity(intent);
                         finish();
