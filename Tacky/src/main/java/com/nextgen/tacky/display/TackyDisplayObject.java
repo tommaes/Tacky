@@ -28,56 +28,56 @@ public class TackyDisplayObject implements Parcelable {
         this.expression = p.readParcelable(TackyExpression.class.getClassLoader());
     }
 
-    public Bitmap getHeadFront(LocalTackyDisplayObject_DB db) {
-        return head.getFront(db.getTackyHead_db());
+    public DisplayItem getHeadFront() {
+        return head.getFront();
     }
 
-    public Bitmap getHeadSleep(LocalTackyDisplayObject_DB db) {
-        return head.getSleep(db.getTackyHead_db());
+    public DisplayItem getHeadSleep() {
+        return head.getSleep();
     }
 
-    public Bitmap getHeadDown(LocalTackyDisplayObject_DB db) {
-        return head.getDown(db.getTackyHead_db());
+    public DisplayItem getHeadDown() {
+        return head.getDown();
     }
 
-    public Bitmap getHeadSide(LocalTackyDisplayObject_DB db) {
-        return head.getSide(db.getTackyHead_db());
+    public DisplayItem getHeadSide() {
+        return head.getSide();
     }
 
-    public Bitmap getHeadUp(LocalTackyDisplayObject_DB db) {
-        return head.getUp(db.getTackyHead_db());
+    public DisplayItem getHeadUp() {
+        return head.getUp();
     }
 
-    public Bitmap getBodyFront(LocalTackyDisplayObject_DB db) {
-        return body.getFront(db.getTackyBody_db());
+    public DisplayItem getBodyFront() {
+        return body.getFront();
     }
 
-    public Bitmap getBodySleep(LocalTackyDisplayObject_DB db) {
-        return body.getSleep(db.getTackyBody_db());
+    public DisplayItem getBodySleep() {
+        return body.getSleep();
     }
 
-    public Bitmap getBodyUp(LocalTackyDisplayObject_DB db) {
-        return body.getUp(db.getTackyBody_db());
+    public DisplayItem getBodyUp() {
+        return body.getUp();
     }
 
-    public Bitmap getBodyDown(LocalTackyDisplayObject_DB db) {
-        return body.getDown(db.getTackyBody_db());
+    public DisplayItem getBodyDown() {
+        return body.getDown();
     }
 
-    public Bitmap getBodySide(LocalTackyDisplayObject_DB db) {
-        return body.getSide(db.getTackyBody_db());
+    public DisplayItem getBodySide() {
+        return body.getSide();
     }
 
-    public Bitmap getExpressionFront(LocalTackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
-        return expression.getFront(db.getTackyExpression_db(), moodValue);
+    public DisplayItem getExpressionFront(MoodState.MoodValue moodValue) {
+        return expression.getFront(moodValue);
     }
 
-    public Bitmap getExpressionSide(LocalTackyDisplayObject_DB db, MoodState.MoodValue moodValue) {
-        return expression.getSide(db.getTackyExpression_db(), moodValue);
+    public DisplayItem getExpressionSide(MoodState.MoodValue moodValue) {
+        return expression.getSide(moodValue);
     }
 
-    public Bitmap getExpressionSleep(LocalTackyDisplayObject_DB db) {
-        return expression.getSleep(db.getTackyExpression_db());
+    public DisplayItem getExpressionSleep() {
+        return expression.getSleep();
     }
 
     // implements Parcelable

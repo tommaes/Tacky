@@ -38,20 +38,4 @@ public class LocalTackyDisplayObject_DB {
 
         return new TackyDisplayObject(head, body, expression);
     }
-
-    public LocalTackyBody_DB getTackyBody_db() {
-        return localTackyBody_db;
-    }
-
-    public LocalTackyEventHead_DB getTackyEventHead_db() {
-        return localTackyEventHead_db;
-    }
-
-    public LocalTackyHead_DB getTackyHead_db() {
-        return localTackyHead_db;
-    }
-
-    public LocalTackyExpression_DB getTackyExpression_db() {
-        return localTackyExpression_db;
-    }
 }

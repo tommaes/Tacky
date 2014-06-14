@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.nextgen.tacky.db.TackyBody_DB;
 import com.nextgen.tacky.db.localDB.LocalTackyBody_DB;
 
 /**
@@ -11,7 +12,9 @@ import com.nextgen.tacky.db.localDB.LocalTackyBody_DB;
  */
 public class TackyBody implements Parcelable {
 
+    // pure class, so can be returned
     private DisplayItem body = null;
+
     private int databaseId;
 
     public TackyBody(String body, int databaseId) {
@@ -24,30 +27,24 @@ public class TackyBody implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(LocalTackyBody_DB db) {
-        return getBitmap(db, body);
+    public DisplayItem getFront() {
+        return body;
     }
 
-    public Bitmap getSide(LocalTackyBody_DB db) {
-        return getBitmap(db, body);
+    public DisplayItem getSide() {
+        return body;
     }
 
-    public Bitmap getSleep(LocalTackyBody_DB db) {
-        return getBitmap(db, body);
+    public DisplayItem getSleep() {
+        return body;
     }
 
-    public Bitmap getUp(LocalTackyBody_DB db) {
-        return getBitmap(db, body);
+    public DisplayItem getUp() {
+        return body;
     }
 
-    public Bitmap getDown(LocalTackyBody_DB db) {
-        return getBitmap(db, body);
-    }
-
-    private Bitmap getBitmap(LocalTackyBody_DB db, DisplayItem displayItem) {
-        if (!displayItem.hasBitmap())
-            displayItem.setBitmap(db.decodeImage(displayItem.getName()));
-        return displayItem.getBitmap();
+    public DisplayItem getDown() {
+        return body;
     }
 
     public int getDatabaseId() {

@@ -12,6 +12,7 @@ import com.nextgen.tacky.db.localDB.LocalTackyExpression_DB;
  */
 public class Expression implements Parcelable {
 
+    // pure classes
     private DisplayItem happy;
     private DisplayItem normal;
     private DisplayItem sad;
@@ -34,41 +35,35 @@ public class Expression implements Parcelable {
         this.sad = p.readParcelable(DisplayItem.class.getClassLoader());
     }
 
-    public Bitmap getExpression(LocalTackyExpression_DB db, MoodState.MoodValue moodValue){
-        Bitmap displayItem = null;
+    public DisplayItem getExpression(MoodState.MoodValue moodValue){
+        DisplayItem displayItem = null;
         switch (moodValue) {
             case HAPPY: {
-                displayItem = getHappyExpression(db);
+                displayItem = getHappyExpression();
                 break;
             }
             case SAD: {
-                displayItem = getSadExpression(db);
+                displayItem = getSadExpression();
                 break;
             }
             default: {
-                displayItem = getNormalExpression(db);
+                displayItem = getNormalExpression();
                 break;
             }
         }
         return displayItem;
     }
 
-    private Bitmap getHappyExpression(LocalTackyExpression_DB db) {
-        return getBitmap(db, happy);
+    private DisplayItem getHappyExpression() {
+        return happy;
     }
 
-    private Bitmap getNormalExpression(LocalTackyExpression_DB db) {
-        return getBitmap(db, normal);
+    private DisplayItem getNormalExpression() {
+        return normal;
     }
 
-    private Bitmap getSadExpression(LocalTackyExpression_DB db) {
-        return getBitmap(db, sad);
-    }
-
-    private Bitmap getBitmap(LocalTackyExpression_DB db, DisplayItem displayItem) {
-        if (!displayItem.hasBitmap())
-            displayItem.setBitmap(db.decodeImage(displayItem.getName()));
-        return displayItem.getBitmap();
+    private DisplayItem getSadExpression() {
+        return sad;
     }
 
     @Override

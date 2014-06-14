@@ -60,9 +60,9 @@ public class Tacky extends Observable implements Parcelable {
         time.set(birthday);
         this.dayOfBirth = time;
         this.tackyState = tackyState;
-        headId = headId;
-        bodyId = bodyId;
-        expressionId = expressionId;
+        this.headId = headId;
+        this.bodyId = bodyId;
+        this.expressionId = expressionId;
     }
 
     Tacky(Parcel p) {

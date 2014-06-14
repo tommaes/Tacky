@@ -133,11 +133,6 @@ public class LocalTackyExpression_DB {
         });
     }
 
-    public Bitmap decodeImage(String name) {
-        int imageResource = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-        return BitmapFactory.decodeResource(context.getResources(), imageResource);
-    }
-
     public static void dropTable(LocalDatabase db, String dropTable) {
         db.dropTable(dropTable + EXPRESSION_TABLE);
     }

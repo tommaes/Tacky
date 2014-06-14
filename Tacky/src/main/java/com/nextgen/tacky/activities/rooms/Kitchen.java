@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.basic.Food;
-import com.nextgen.tacky.db.localDB.LocalFood_DB;
+import com.nextgen.tacky.db.Food_DB;
 
 import java.util.ArrayList;
 
@@ -53,11 +53,11 @@ public class Kitchen extends Chamber {
 
     public void showFood(){
         final Dialog dialog = new Dialog(this);
-        final LocalFood_DB localFood_db = new LocalFood_DB(this);
+        final Food_DB food_db = new Food_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Food");
 
-        ArrayList<Food> foods = localFood_db.getFoods();
+        ArrayList<Food> foods = food_db.getFoods();
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -72,7 +72,7 @@ public class Kitchen extends Chamber {
                 public void onClick(View v) {
                     tacky.addSatisfiedState(f);
                     if(!f.canStillBeUsed())
-                        localFood_db.deleteFood(f);
+                        food_db.deleteFood(f);
                     dialog.dismiss();
                 }
             });

@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nextgen.tacky.R;
-import com.nextgen.tacky.db.localDB.LocalRoom_DB;
-import com.nextgen.tacky.db.localDB.LocalTacky_DB;
+import com.nextgen.tacky.db.Room_DB;
+import com.nextgen.tacky.db.Tacky_DB;
 
 import java.util.ArrayList;
 
@@ -29,11 +29,11 @@ public class DeleteTacky extends Activity {
     }
 
     public void displayTackys(final LinearLayout l){
-        final LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
-        final LocalRoom_DB localRoom_db = new LocalRoom_DB(this);
+        final Tacky_DB tacky_db = new Tacky_DB(this);
+        final Room_DB room_db = new Room_DB(this);
         l.removeAllViews();
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ArrayList<String> names = localTacky_db.getTackyNames();
+        ArrayList<String> names = tacky_db.getTackyNames();
         for(final String name : names){
             TextView text = new TextView(this);
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -53,8 +53,8 @@ public class DeleteTacky extends Activity {
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            localTacky_db.deleteTacky(name);
-                            localRoom_db.deleteRooms(name);
+                            tacky_db.deleteTacky(name);
+                            room_db.deleteRooms(name);
                             dialog.cancel();
                             displayTackys(l);
                         }

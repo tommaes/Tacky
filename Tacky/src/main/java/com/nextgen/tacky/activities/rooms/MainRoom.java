@@ -30,9 +30,9 @@ import com.nextgen.tacky.activities.MainTackySurface;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.localDB.LocalFood_DB;
-import com.nextgen.tacky.db.localDB.LocalRoom_DB;
-import com.nextgen.tacky.db.localDB.LocalTacky_DB;
+import com.nextgen.tacky.db.Food_DB;
+import com.nextgen.tacky.db.Room_DB;
+import com.nextgen.tacky.db.Tacky_DB;
 import com.nextgen.tacky.threads.TackyThread;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class MainRoom extends Activity {
         SurfaceHolder sh = surf.getHolder();
         MAIN_TACKY_PACKAGE = getApplicationContext().getPackageName();
         this.mainTackySurface = new MainTackySurface(this, this, sh, tacky);
-        tackyThread = new TackyThread(tacky, new LocalTacky_DB(this));
+        tackyThread = new TackyThread(tacky, new Tacky_DB(this));
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0,
@@ -100,8 +100,8 @@ public class MainRoom extends Activity {
     }
 
     public void onBackPressed() {
-        LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
-        localTacky_db.updateTackyWithoutRoom(tacky);
+        Tacky_DB tacky_db = new Tacky_DB(this);
+        tacky_db.updateTackyWithoutRoom(tacky);
         super.onBackPressed();
     }
 
@@ -127,12 +127,12 @@ public class MainRoom extends Activity {
 
     public void changeRoom(){
         final Dialog dialog = new Dialog(this);
-        final LocalRoom_DB localRoom_db = new LocalRoom_DB(this);
-        final LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
+        final Room_DB room_db = new Room_DB(this);
+        final Tacky_DB tacky_db = new Tacky_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Rooms");
 
-        ArrayList<Room> rooms = localRoom_db.getRooms(this.tacky);
+        ArrayList<Room> rooms = room_db.getRooms(this.tacky);
 
         final Context mainTacky = this;
 
@@ -149,7 +149,7 @@ public class MainRoom extends Activity {
                 @Override
                 public void onClick(View v) {
                     tacky.setCurrentRoom(r);
-                    localTacky_db.updateTacky(tacky);
+                    tacky_db.updateTacky(tacky);
                     Intent intent = RoomSwitch.roomSwitch(mainTacky, tacky);
                     dialog.dismiss();
                     startActivity(intent);
@@ -162,9 +162,9 @@ public class MainRoom extends Activity {
     }
 
     public void onDestroy(){
-        LocalTacky_DB localTacky_db = new LocalTacky_DB(this);
+        Tacky_DB tacky_db = new Tacky_DB(this);
         tackyThread.stopRunning();
-        localTacky_db.updateTackyWithoutRoom(this.tacky);
+        tacky_db.updateTackyWithoutRoom(this.tacky);
         disableNfcAdapterDispatch();
         super.onDestroy();
     }
@@ -184,7 +184,7 @@ public class MainRoom extends Activity {
 
     public void newFood(final Food f){
         final Dialog dialog = new Dialog(this);
-        final LocalFood_DB localFood_db = new LocalFood_DB(this);
+        final Food_DB food_db = new Food_DB(this);
         dialog.setContentView(R.layout.activity_new_food);
         dialog.setTitle("New food discovered.");
         dialog.show();
@@ -201,7 +201,7 @@ public class MainRoom extends Activity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                localFood_db.storeFood(f);
+                food_db.storeFood(f);
                 dialog.dismiss();
             }
         });
@@ -221,43 +221,45 @@ public class MainRoom extends Activity {
     private void handleIntent(Intent intent) {
         String action = intent.getAction();
 
-        if (action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
-            // Probably unformatted tag?
-        } else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)) {
-            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            NdefMessage[] msgs;
+        if (action != null) {
+            if (action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
+                // Probably unformatted tag?
+            } else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)) {
+                Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+                NdefMessage[] msgs;
 
-            if (rawMsgs == null) {
-                // no NdefMessages
-            } else {
-                msgs = new NdefMessage[rawMsgs.length];
-                for (int i = 0; i < rawMsgs.length; i++) {
-                    msgs[i] = (NdefMessage) rawMsgs[i];
-                    Log.i("NFC", i + " " + Arrays.toString(msgs[i].toByteArray()));
-                    for (NdefRecord rec : msgs[i].getRecords()) {
+                if (rawMsgs == null) {
+                    // no NdefMessages
+                } else {
+                    msgs = new NdefMessage[rawMsgs.length];
+                    for (int i = 0; i < rawMsgs.length; i++) {
+                        msgs[i] = (NdefMessage) rawMsgs[i];
+                        Log.i("NFC", i + " " + Arrays.toString(msgs[i].toByteArray()));
+                        for (NdefRecord rec : msgs[i].getRecords()) {
 
-                        String typeStr = new String(rec.getType());
-                        if (typeStr.equals("com.nextgen.tacky:food")) {
-                            // Reading Food object from NFC
-                            byte[] data = rec.getPayload(); // byte data from NFC tag
+                            String typeStr = new String(rec.getType());
+                            if (typeStr.equals("com.nextgen.tacky:food")) {
+                                // Reading Food object from NFC
+                                byte[] data = rec.getPayload(); // byte data from NFC tag
 
-                            Parcel p = Parcel.obtain();
-                            p.unmarshall(data, 0, data.length); // force byte data from NFC into Parcel
-                            p.setDataPosition(0); // crucial!
-                            Food f = Food.CREATOR.createFromParcel(p);
-                            p.recycle();
-                            /*
-                            Log.i("NFC", "name " + f.getName());
-                            Log.i("NFC", "vis " + f.getVisualization());
-                            Log.i("NFC", "energy " + f.getEnergyValue());
-                            Log.i("NFC", "uses " + f.getTotalUses());
-                            */
-                            newFood(f);
+                                Parcel p = Parcel.obtain();
+                                p.unmarshall(data, 0, data.length); // force byte data from NFC into Parcel
+                                p.setDataPosition(0); // crucial!
+                                Food f = Food.CREATOR.createFromParcel(p);
+                                p.recycle();
+                                /*
+                                Log.i("NFC", "name " + f.getName());
+                                Log.i("NFC", "vis " + f.getVisualization());
+                                Log.i("NFC", "energy " + f.getEnergyValue());
+                                Log.i("NFC", "uses " + f.getTotalUses());
+                                */
+                                newFood(f);
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
     }
 

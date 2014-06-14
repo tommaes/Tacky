@@ -11,11 +11,13 @@ import com.nextgen.tacky.db.localDB.LocalTackyHead_DB;
  */
 public class TackyHead implements Parcelable {
 
+    // pure classes
     private DisplayItem front;
     private DisplayItem side;
     private DisplayItem sleep;
     private DisplayItem up;
     private DisplayItem down;
+
     private int databaseId;
 
     public TackyHead(String normal, String sleep, String up, String down, int databaseId) {
@@ -36,31 +38,26 @@ public class TackyHead implements Parcelable {
         this.databaseId = p.readInt();
     }
 
-    public Bitmap getFront(LocalTackyHead_DB db) {
-        return getBitmap(db, front);
+    public DisplayItem getFront() {
+        return front;
     }
 
-    public Bitmap getSide(LocalTackyHead_DB db) {
-        return getBitmap(db, side);
+    public DisplayItem getSide() {
+        return side;
     }
 
-    public Bitmap getSleep(LocalTackyHead_DB db) {
-        return getBitmap(db, sleep);
+    public DisplayItem getSleep() {
+        return sleep;
     }
 
-    public Bitmap getUp(LocalTackyHead_DB db) {
-        return getBitmap(db, up);
+    public DisplayItem getUp() {
+        return up;
     }
 
-    public Bitmap getDown(LocalTackyHead_DB db) {
-        return getBitmap(db, down);
+    public DisplayItem getDown() {
+        return down;
     }
 
-    private Bitmap getBitmap(LocalTackyHead_DB db, DisplayItem displayItem) {
-        if (!displayItem.hasBitmap())
-            displayItem.setBitmap(db.decodeImage(displayItem.getName()));
-        return displayItem.getBitmap();
-    }
 
     public int getDatabaseId() {
         return databaseId;

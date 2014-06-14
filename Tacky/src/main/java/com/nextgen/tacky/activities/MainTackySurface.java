@@ -6,7 +6,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.nextgen.tacky.activities.rooms.MainRoom;
-import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.observer.Observable;
 import com.nextgen.tacky.basic.observer.Observer;
 import com.nextgen.tacky.basic.tacky.Tacky;

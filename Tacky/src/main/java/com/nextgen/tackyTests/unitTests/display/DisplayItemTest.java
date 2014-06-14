@@ -18,10 +18,8 @@ public class DisplayItemTest extends TestCase {
         DisplayItem displayItem = new DisplayItem(name);
 
         // test Name getter
-        assertEquals(name, displayItem.getName());
+        assertEquals(name, displayItem.getDisplayItemName());
 
-        // test empty bitmap
-        assertFalse(displayItem.hasBitmap());
     }
 
     public void testParcel() throws Exception {
@@ -33,7 +31,7 @@ public class DisplayItemTest extends TestCase {
         DisplayItem parcelDisplayItem = DisplayItem.CREATOR.createFromParcel(parcel);
 
         assert parcelDisplayItem != null;
-        assertEquals(name, parcelDisplayItem.getName());
+        assertEquals(name, parcelDisplayItem.getDisplayItemName());
     }
 
 }

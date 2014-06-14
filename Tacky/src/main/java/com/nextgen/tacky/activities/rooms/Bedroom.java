@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
 
 /**

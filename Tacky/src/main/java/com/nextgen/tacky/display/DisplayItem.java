@@ -9,25 +9,14 @@ import android.os.Parcelable;
  */
 public class DisplayItem implements Parcelable {
 
-    private Bitmap bitmap = null;
     private String name;
 
     public DisplayItem(String name) {
         this.name = name;
     }
 
-    public String getName() {
+    public String getDisplayItemName() {
         return name;
-    }
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public boolean hasBitmap() {
-        return this.bitmap != null;
-    }
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
     }
 
     // implements Parcelable
