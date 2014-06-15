@@ -1,5 +1,6 @@
 package com.nextgen.tacky.activities;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +25,9 @@ import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.db.Room_DB;
 import com.nextgen.tacky.db.TackyBody_DB;
-import com.nextgen.tacky.db.TackyExpression_DB;
-import com.nextgen.tacky.db.TackyHead_DB;
 import com.nextgen.tacky.db.Tacky_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyExpression_DB;
+import com.nextgen.tacky.db.localDB.LocalTackyHead_DB;
 import com.nextgen.tacky.display.DisplayFactory;
 import com.nextgen.tacky.display.DisplayItem;
 import com.nextgen.tacky.display.TackyBody;
@@ -94,11 +96,11 @@ public class CreateTacky extends Activity {
 
     private void choseHead(){
         final Dialog dialog = new Dialog(this);
-        final TackyHead_DB tackyHead_db = new TackyHead_DB(this);
+        final LocalTackyHead_DB localTackyHead_db = new LocalTackyHead_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Choose a head for your Tacky");
 
-        ArrayList<TackyHead> heads = tackyHead_db.getHeads();
+        ArrayList<TackyHead> heads = localTackyHead_db.getHeads();
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -158,11 +160,11 @@ public class CreateTacky extends Activity {
 
     private void choseExpression(){
         final Dialog dialog = new Dialog(this);
-        final TackyExpression_DB tackyExpression_db = new TackyExpression_DB(this);
+        final LocalTackyExpression_DB localTackyExpression_db = new LocalTackyExpression_DB(this);
         dialog.setContentView(R.layout.activity_display_stuff);
         dialog.setTitle("Choose an expression for your Tacky");
 
-        ArrayList<TackyExpression> expressions = tackyExpression_db.getExpressions();
+        ArrayList<TackyExpression> expressions = localTackyExpression_db.getExpressions();
 
         LinearLayout l = (LinearLayout) dialog.findViewById(R.id.showStuff);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -190,18 +192,19 @@ public class CreateTacky extends Activity {
         dialog.show();
     }
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void createTacky(View view) {
-        Room_DB room_db = new Room_DB(this);
-        Tacky_DB tacky_db = new Tacky_DB(this);
         EditText editText = (EditText) findViewById(R.id.nameTacky);
-        String name = editText.getText().toString();
-        if (!name.equals("")) {
+        String name = editText.getText().toString().trim();
+        if (name.length() > 0) {
+            Room_DB room_db = new Room_DB(this);
+            Tacky_DB tacky_db = new Tacky_DB(this);
             Tacky tacky = tacky_db.getTacky(name);
             if(tacky == null){
                 if(head != null && body != null && expression != null) {
                     tacky = tacky_db.initializeTacky(name, head, body, expression);
                     room_db.initializeTackyRooms(tacky);
-                    Intent intent = new RoomSwitch().roomSwitch(this, tacky);
+                    Intent intent = RoomSwitch.roomSwitch(this, tacky);
                     startActivity(intent);
                     finish();
                 }

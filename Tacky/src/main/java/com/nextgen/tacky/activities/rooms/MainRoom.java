@@ -247,12 +247,6 @@ public class MainRoom extends Activity {
                                 p.setDataPosition(0); // crucial!
                                 Food f = Food.CREATOR.createFromParcel(p);
                                 p.recycle();
-                                /*
-                                Log.i("NFC", "name " + f.getName());
-                                Log.i("NFC", "vis " + f.getVisualization());
-                                Log.i("NFC", "energy " + f.getEnergyValue());
-                                Log.i("NFC", "uses " + f.getTotalUses());
-                                */
                                 newFood(f);
                             }
                         }
