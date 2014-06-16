@@ -1,4 +1,4 @@
-package com.nextgen.tacky.activities.rooms;
+package com.nextgen.tacky.activities.rooms.outdoor;
 
 import android.os.Bundle;
 

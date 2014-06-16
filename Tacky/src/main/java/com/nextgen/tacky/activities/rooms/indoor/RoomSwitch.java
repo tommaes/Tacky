@@ -1,8 +1,10 @@
-package com.nextgen.tacky.activities.rooms;
+package com.nextgen.tacky.activities.rooms.indoor;
 
 import android.content.Context;
 import android.content.Intent;
 
+import com.nextgen.tacky.activities.rooms.MainRoom;
+import com.nextgen.tacky.activities.rooms.outdoor.Outdoors;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
 

@@ -1,4 +1,4 @@
-package com.nextgen.tacky.activities.rooms;
+package com.nextgen.tacky.activities.rooms.outdoor;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.nextgen.tacky.activities.rooms.MainRoom;
 import com.nextgen.tacky.basic.TackyLocation;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.basic.tacky.TackyState;
@@ -64,11 +65,11 @@ public class Outdoors extends MainRoom {
         outdoorsLocationListener.onPause();
     }
 
-    private void askUser(final TackyLocation tloc) {
+    private void askUser(final TackyLocation tackyLocation) {
         dialogOpen = true;
-        CURRENT_LOCATION = tloc;
+        CURRENT_LOCATION = tackyLocation;
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Would you like to switch to " + tloc.getRoomName() + "?");
+        builder.setMessage("Would you like to switch to " + tackyLocation.getRoomName() + "?");
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -81,40 +82,14 @@ public class Outdoors extends MainRoom {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 dialogOpen = false;
-                tloc.transferTackyTo(tacky);
-                Intent intent = startOutdoorsActivity(Outdoors.this, tloc);
+                tackyLocation.transferTackyTo(tacky);
+                Intent intent = RoomSwitch.roomSwitch(Outdoors.this, tacky, tackyLocation);
                 startActivity(intent);
                 finish();
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    // --------------------- Outdoors switch --------------
-
-
-    private Intent startOutdoorsActivity(Context context, TackyLocation tackyLocation){
-
-        Intent intent = null;
-
-        switch(tackyLocation.getOutdoorsType()){
-            case PARK:{
-                intent = new Intent(context, Park.class);
-                tacky.setCurrentStatus(TackyState.TackyStatus.NORMAL);
-                intent.putExtra(Tacky.TACKY, tacky);
-                break;
-            }
-            case RESTAURANT: {
-                intent = new Intent(context, Restaurant.class);
-                tacky.setCurrentStatus(TackyState.TackyStatus.NORMAL);
-                intent.putExtra(Tacky.TACKY, tacky);
-                break;
-            }
-        }
-
-        return intent;
-
     }
 
 }

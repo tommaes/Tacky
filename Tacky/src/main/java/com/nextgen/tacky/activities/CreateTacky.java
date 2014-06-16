@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nextgen.tacky.R;
-import com.nextgen.tacky.activities.rooms.RoomSwitch;
+import com.nextgen.tacky.activities.rooms.indoor.RoomSwitch;
 import com.nextgen.tacky.basic.State.MoodState;
 import com.nextgen.tacky.basic.tacky.Tacky;
 import com.nextgen.tacky.db.Room_DB;

@@ -2,7 +2,7 @@ package com.nextgen.tacky.basic;
 
 import android.location.Location;
 
-import com.nextgen.tacky.activities.rooms.Outdoors;
+import com.nextgen.tacky.activities.rooms.outdoor.Outdoors;
 import com.nextgen.tacky.basic.tacky.Tacky;
 
 /**

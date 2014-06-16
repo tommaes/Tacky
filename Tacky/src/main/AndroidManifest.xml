@@ -48,37 +48,37 @@
         </activity>
 
         <activity
-            android:name=".activities.rooms.Kitchen"
+            android:name=".activities.rooms.indoor.Kitchen"
             android:label="Kitchen"
             android:parentActivityName="com.nextgen.tacky.activities.MainActivity">
         </activity>
 
         <activity
-            android:name=".activities.rooms.Bathroom"
+            android:name=".activities.rooms.indoor.Bathroom"
             android:label="Bathroom"
             android:parentActivityName="com.nextgen.tacky.activities.MainActivity">
         </activity>
 
         <activity
-            android:name=".activities.rooms.Bedroom"
+            android:name=".activities.rooms.indoor.Bedroom"
             android:label="Bedroom"
             android:parentActivityName="com.nextgen.tacky.activities.MainActivity">
         </activity>
 
         <activity
-            android:name=".activities.rooms.Outdoors"
+            android:name=".activities.rooms.outdoor.Outdoors"
             android:label="Outdoors"
             android:parentActivityName="com.nextgen.tacky.activities.MainActivity">
         </activity>
 
         <activity
-            android:name=".activities.rooms.Park"
+            android:name=".activities.rooms.outdoor.Park"
             android:label="Park"
             android:parentActivityName="com.nextgen.tacky.activities.MainActivity">
         </activity>
 
         <activity
-            android:name=".activities.rooms.Restaurant"
+            android:name=".activities.rooms.outdoor.Restaurant"
             android:label="Restaurant"
             android:parentActivityName="com.nextgen.tacky.activities.MainActivity">
         </activity>

@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.MainTackySurface;
+import com.nextgen.tacky.activities.rooms.indoor.RoomSwitch;
 import com.nextgen.tacky.basic.Food;
 import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;

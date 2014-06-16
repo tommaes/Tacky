@@ -1,19 +1,13 @@
-package com.nextgen.tacky.activities.rooms;
+package com.nextgen.tacky.activities.rooms.indoor;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nextgen.tacky.basic.tacky.TackyState;
-
 /**
  * Created by maes on 13/11/13.
  */
-public class Bedroom extends Chamber {
-
-    private static final int MENU_SLEEP = MENU_CHAMBER_LAST;
-    private static final int MENU_WAKE_UP = MENU_SLEEP + 1;
-    public static final int MENU_BEDROOM_LAST = MENU_WAKE_UP + 1;
+public class Bathroom extends Chamber {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,21 +20,16 @@ public class Bedroom extends Chamber {
 
     public boolean onPrepareOptionsMenu(Menu menu){
         super.onPrepareOptionsMenu(menu);
-        menu.add(0, MENU_SLEEP, Menu.NONE, "Sleep");
-        menu.add(0, MENU_WAKE_UP, Menu.NONE, "Wake Up");
+        //menu.add(0, MENU_CHANGE_BACKGROUND_ROOM, Menu.NONE, "Change Background");
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem menuItem){
         switch (menuItem.getItemId()) {
-            case MENU_SLEEP : {
-                tacky.setCurrentStatus(TackyState.TackyStatus.SLEEPING);
+            /*case MENU_CHANGE_BACKGROUND_ROOM : {
+                changeBackgroundRoom();
                 break;
-            }
-            case MENU_WAKE_UP : {
-                tacky.setCurrentStatus(TackyState.TackyStatus.TRYTOSLEEP);
-                break;
-            }
+            }*/
             default:{
                 super.onOptionsItemSelected(menuItem);
             }
@@ -48,7 +37,7 @@ public class Bedroom extends Chamber {
         return true;
     }
 
-    public void onDestroy(){
+  public void onDestroy(){
         super.onDestroy();
     }
 

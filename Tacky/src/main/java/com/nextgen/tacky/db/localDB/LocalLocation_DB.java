@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 
-import com.nextgen.tacky.activities.rooms.Outdoors;
+import com.nextgen.tacky.activities.rooms.outdoor.Outdoors;
 import com.nextgen.tacky.basic.TackyLocation;
 import com.nextgen.tacky.db.generic.ReadCommand;
 import com.nextgen.tacky.db.generic.StoreCommand;
