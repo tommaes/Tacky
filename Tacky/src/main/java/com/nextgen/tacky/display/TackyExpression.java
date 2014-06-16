@@ -1,6 +1,5 @@
 package com.nextgen.tacky.display;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -39,7 +38,7 @@ public class TackyExpression implements Parcelable {
     }
 
     public DisplayItem getSleep() {
-        return sleep.getExpression(null);
+        return sleep.getExpression(MoodState.MoodValue.NORMAL);
     }
 
     public int getDatabaseId() {

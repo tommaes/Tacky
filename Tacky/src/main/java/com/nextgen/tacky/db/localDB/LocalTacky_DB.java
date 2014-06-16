@@ -23,21 +23,22 @@ import java.util.ArrayList;
 public class LocalTacky_DB {
 
     private static LocalDatabase db = null;
+    private Context context;
 
     public static final String TACKY_TABLE = "tackies";
 
     public static final String TACKY_NAME = "name";
-    public static final String TACKY_DAYOFBIRTH = "dayOfBirth";
-    public static final String TACKY_HAPPYLVL = "happinessLevel";
-    public static final String TACKY_HAPPYGAIN = "happinessGain";
-    public static final String TACKY_ENERGYLVL = "energyLevel";
-    public static final String TACKY_ENERGYGAIN = "energyGain";
-    public static final String TACKY_SATISFIEDLVL = "satisfiedLevel";
-    public static final String TACKY_SATISFIEDGAIN = "satisfiedGain";
-    public static final String TACKY_CURRENTROOM = "currentRoom";
-    public static final String TACKY_HEAD = "head";
-    public static final String TACKY_BODY = "body";
-    public static final String TACKY_EXPRESSION = "expression";
+    private static final String TACKY_DAYOFBIRTH = "dayOfBirth";
+    private static final String TACKY_HAPPYLVL = "happinessLevel";
+    private static final String TACKY_HAPPYGAIN = "happinessGain";
+    private static final String TACKY_ENERGYLVL = "energyLevel";
+    private static final String TACKY_ENERGYGAIN = "energyGain";
+    private static final String TACKY_SATISFIEDLVL = "satisfiedLevel";
+    private static final String TACKY_SATISFIEDGAIN = "satisfiedGain";
+    private static final String TACKY_CURRENTROOM = "currentRoom";
+    private static final String TACKY_HEAD = "head";
+    private static final String TACKY_BODY = "body";
+    private static final String TACKY_EXPRESSION = "expression";
 
     private static final String HEAD_TABLE = "heads";
     private static final String BODY_TABLE = "bodies";
@@ -75,6 +76,7 @@ public class LocalTacky_DB {
     public LocalTacky_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
+        context = ctx;
     }
 
     public static void initializeTable(LocalDatabase db) {
@@ -96,8 +98,9 @@ public class LocalTacky_DB {
     }
 
     public Tacky getTacky(String name) {
+        LocalRoom_DB localRoom_db = new LocalRoom_DB(context);
         String query = String.format(TACKY_SQL_READ_TACKY, name);
-        return db.readValue(query, new ReadCommand<Tacky, Cursor>() {
+        Tacky tacky = db.readValue(query, new ReadCommand<Tacky, Cursor>() {
             @Override
             public Tacky readItem(Cursor cursor) {
                 String name = cursor.getString(cursor.getColumnIndex(TACKY_NAME));
@@ -120,6 +123,9 @@ public class LocalTacky_DB {
                 return new Tacky(name, birthday, tackyState, r, headId, bodyId, expressionId);
             }
         });
+        Room room = localRoom_db.getRoom(tacky.getRoomName(), tacky.getName());
+        tacky.setCurrentRoom(room);
+        return  tacky;
     }
 
     public Tacky initializeTacky(String name, TackyHead head, TackyBody body, TackyExpression expression){
@@ -148,6 +154,7 @@ public class LocalTacky_DB {
                 cv.put(TACKY_HEAD, head.getDatabaseId());
                 cv.put(TACKY_BODY, body.getDatabaseId());
                 cv.put(TACKY_EXPRESSION, exp.getDatabaseId());
+
 
                 return cv;
             }

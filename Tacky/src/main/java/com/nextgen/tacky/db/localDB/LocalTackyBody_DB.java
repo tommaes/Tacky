@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class LocalTackyBody_DB {
 
     private static LocalDatabase db = null;
-    private Context context;
 
     private static final String[] colors = {"green", "orange", "pink", "red", "turquoise", "yellow"};
 
@@ -39,7 +38,6 @@ public class LocalTackyBody_DB {
     public LocalTackyBody_DB(Context ctx){
         if(db == null)
             db = LocalDatabase.getDatabase(ctx);
-        context = ctx;
     }
 
     public static void initializeTable(LocalDatabase db) {

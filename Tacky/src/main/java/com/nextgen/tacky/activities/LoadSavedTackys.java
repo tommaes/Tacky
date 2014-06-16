@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import com.nextgen.tacky.R;
 import com.nextgen.tacky.activities.rooms.RoomSwitch;
-import com.nextgen.tacky.basic.Room;
 import com.nextgen.tacky.basic.tacky.Tacky;
-import com.nextgen.tacky.db.Room_DB;
 import com.nextgen.tacky.db.Tacky_DB;
 
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ public class LoadSavedTackys extends Activity {
 
     protected void onCreate(Bundle savedInstanceState){
         final Tacky_DB tacky_db = new Tacky_DB(this);
-        final Room_DB room_db = new Room_DB(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_saved_tackys);
         LinearLayout l = (LinearLayout) findViewById(R.id.savedTackys);
@@ -42,9 +39,7 @@ public class LoadSavedTackys extends Activity {
                     @Override
                     public void onClick(View v) {
                         Tacky tacky = tacky_db.getTacky(name);
-                        Room room = room_db.getRoom(tacky.getRoomName(), tacky.getName());
-                        tacky.setCurrentRoom(room);
-                        Intent intent = new RoomSwitch().roomSwitch(context, tacky);
+                        Intent intent = RoomSwitch.roomSwitch(context, tacky);
                         startActivity(intent);
                         finish();
                     }

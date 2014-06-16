@@ -21,9 +21,9 @@ public class LocalRoom_DB {
     public static final String ROOM_TABLE = "rooms";
 
     public static final String ROOM_NAME = "name";
-    public static final String ROOM_OWNER = "owner";
-    public static final String ROOM_VISUAL = "visualization";
-    public static final String ROOM_TYPE = "type";
+    private static final String ROOM_OWNER = "owner";
+    private static final String ROOM_VISUAL = "visualization";
+    private static final String ROOM_TYPE = "type";
 
     private static final String ROOM_SQL_CREATE = "CREATE TABLE " + ROOM_TABLE + " (" +
             ROOM_NAME + " TEXT," +

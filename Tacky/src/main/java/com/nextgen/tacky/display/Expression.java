@@ -46,7 +46,7 @@ public class Expression implements Parcelable {
                 displayItem = getSadExpression();
                 break;
             }
-            default: {
+            case NORMAL: {
                 displayItem = getNormalExpression();
                 break;
             }
