@@ -49,7 +49,7 @@ public class Outdoors extends MainRoom {
             }
         };
 
-        outdoorsLocationListener = new OutdoorsLocationListener(outdoorsCommand);
+        outdoorsLocationListener = new OutdoorsLocationListener(outdoorsCommand, this);
     }
 
     @Override

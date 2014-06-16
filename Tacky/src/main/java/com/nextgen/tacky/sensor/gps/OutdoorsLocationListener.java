@@ -1,6 +1,8 @@
 package com.nextgen.tacky.sensor.gps;
 
+import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,9 +26,9 @@ public class OutdoorsLocationListener extends Service implements LocationListene
     // In meters.
     protected static long MINIMUM_DISTANCE_FOR_MEASURING = 5;
 
-    public OutdoorsLocationListener(OutdoorsCommand outdoorsCommand) {
+    public OutdoorsLocationListener(OutdoorsCommand outdoorsCommand, Activity activity) {
         this.outdoorsCommand = outdoorsCommand;
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
         initializeGPS();
     }
 
